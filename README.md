@@ -1,5 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-ggbash
+ggconf
 ======
 
 [![Travis-CI Build Status](https://travis-ci.org/caprice-j/ggbash.svg?branch=master)](https://travis-ci.org/caprice-j/ggbash) [![Build status](https://ci.appveyor.com/api/projects/status/vfia7i1hfowhpqhs?svg=true)](https://ci.appveyor.com/project/caprice-j/ggbash) [![codecov](https://codecov.io/gh/caprice-j/ggbash/branch/master/graph/badge.svg)](https://codecov.io/gh/caprice-j/ggbash) ![](http://www.r-pkg.org/badges/version/ggbash) <!-- [![Coverage Status](https://coveralls.io/repos/github/caprice-j/ggbash/badge.svg)](https://coveralls.io/github/caprice-j/ggbash) --> [![Issue Count](https://codeclimate.com/github/caprice-j/ggbash/badges/issue_count.svg)](https://codeclimate.com/github/caprice-j/ggbash/issues) [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
@@ -14,7 +14,7 @@ Usage
 ``` r
 g <- ggplot(iris) + geom_point(aes(Sepal.Width, Sepal.Length))
 
-g + theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray60', sz=2), panel.bg(fill="white"))
+g + theme2(ax.txt(sz=20, f="bold"), ax.ln(col='gray60', sz=2), panel.bg(fill="white"))
 ```
 
 ![](README-example-1.png)
@@ -34,7 +34,7 @@ If you change your `theme` call into `theme2` call, ggconf would work in some of
 ``` r
 g + theme( axis.text = element_text(size=20, face="bold")) # Case 1: Default (52 characters)
 g + theme2(axis.text = element_text(size=20, face="bold")) # Case 2: ggconf
-g + theme2(ax.txt(sz=20, fc="bold"))                       # Case 3: ggconf  (33 characters)
+g + theme2(ax.txt(sz=20, f="bold"))                        # Case 3: ggconf  (32 characters)
 ```
 
 Features
@@ -55,7 +55,7 @@ For the above `theme2()` input `theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray
         -   `p.bg` matches `plot.background` according to edit distance.
 -   **theme configuration arguments**
     -   `sz` matches `size`.
-    -   `fc` matches `face` (fontface).
+    -   `f` matches `face` (fontface).
     -   `col` matches `colour`.
 
 Users can select one of the styles which notation fits them best.

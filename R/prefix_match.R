@@ -90,7 +90,8 @@ find_first_by_prefix <-
 find_first_index <- function(
     pattern = "sz",
     table = c("x", "y", "size", "shape", "colour", "fill", "alpha", "stroke"),
-    show_warn = TRUE
+    show_warn = TRUE,
+    debug = FALSE
 ){
     first_char <- substr(pattern,1,1)
     # defaultZproblem
@@ -102,8 +103,8 @@ find_first_index <- function(
         # without this if statement,
         # "a" matches "stat" not "alpha"
         return(which(table == "alpha"))
-
-    matched_df <- get_analogue(pattern, table)
+    
+    matched_df <- get_analogue(pattern, table, debug = debug)
     best_matched <- matched_df[1, ]
     return(best_matched$index)
 }
@@ -178,6 +179,8 @@ get_element_tree_clone <- function() {
         "line                                   line element_line
         rect                                   rect element_rect
         text                                   text element_text
+        title                                  text element_text
+        aspect.ratio                   aspect.ratio         unit
         axis.title                       axis.title element_text
         axis.title.x                   axis.title.x element_text
         axis.title.x.top           axis.title.x.top element_text
@@ -189,6 +192,8 @@ get_element_tree_clone <- function() {
         axis.text.y                     axis.text.y element_text
         axis.text.y.right         axis.text.y.right element_text
         axis.ticks                       axis.ticks element_line
+        axis.ticks.x                     axis.ticks element_line
+        axis.ticks.y                     axis.ticks element_line
         axis.ticks.length         axis.ticks.length         unit
         axis.line                         axis.line element_line
         axis.line.x                     axis.line.x element_line
@@ -210,6 +215,7 @@ get_element_tree_clone <- function() {
         legend.direction           legend.direction    character
         legend.justification   legend.justification    character
         legend.box                       legend.box    character
+        legend.box.just             legend.box.just    character
         legend.box.margin         legend.box.margin       margin
         legend.box.background          element_rect element_rect
         legend.box.spacing       legend.box.spacing         unit
@@ -218,8 +224,13 @@ get_element_tree_clone <- function() {
         panel.spacing                 panel.spacing         unit
         panel.spacing.x             panel.spacing.x         unit
         panel.spacing.y             panel.spacing.y         unit
+        panel.grid                     element_line element_line
         panel.grid.major               element_line element_line
         panel.grid.minor               element_line element_line
+        panel.grid.major.x             element_line element_line
+        panel.grid.major.y             element_line element_line
+        panel.grid.minor.x             element_line element_line
+        panel.grid.minor.y             element_line element_line
         panel.ontop                     panel.ontop      logical
         plot.background             plot.background element_rect
         plot.title                       plot.title element_text

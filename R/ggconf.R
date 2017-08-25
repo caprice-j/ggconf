@@ -105,7 +105,7 @@ exec_ggconf <- function(raw_input="",
 #' }
 #'
 #' @export
-theme2 <- function(..., as_string = FALSE){
+theme2 <- function(...){
 
     elem_list <- as.list(substitute(list(...)))[-1L]
 
@@ -127,10 +127,7 @@ theme2 <- function(..., as_string = FALSE){
                     batch_mode = TRUE, as_string = TRUE,
                     show_compiled = FALSE)
     theme_str <- ggstr
-    if (as_string)
-        theme_str
-    else
-        eval(parse(text = theme_str))
+    eval(parse(text = theme_str))
 }
 
 #' print useful debug advice according to the given error message

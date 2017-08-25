@@ -33,7 +33,8 @@ get_analogue <- function(fuzzy_input = "axs.txt",
                              "deletions" = 3,
                              "substitutions" = 2
                          ),
-                         threshold = 6) {
+                         threshold = 6,
+                         debug = FALSE) {
 
     if (length(possibilities) == 0)
         return(NULL)
@@ -53,6 +54,19 @@ get_analogue <- function(fuzzy_input = "axs.txt",
     # (prefer "axis.text.x" than "axis.text")
     with_NA <- with(with_NA, with_NA[order(cost, -nchar), ])
     similar_string_df <- na.omit(with_NA)
+    
+    # customize edit distance
+    # If the first char of fuzzy input and target are the same,
+    # they tend to be much closer than the naive Levenshtein distance
+    # e.g. "l.bg" -> not "plot.background" but "legend.background"
+    first_char <- substr(fuzzy_input, 1, 1)
+    tgt_first_charv <- substr(similar_string_df$name, 1, 1)
+    similar_string_df[first_char == tgt_first_charv, "cost"] <-
+        similar_string_df[first_char == tgt_first_charv, "cost"] - 1
+    similar_string_df <- similar_string_df[with(similar_string_df, order(cost)), ]
+    
+    if (debug)
+        print(similar_string_df)
 
     return(similar_string_df[similar_string_df$cost < threshold, ])
 }
