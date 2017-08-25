@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # ggconf
 
-[![Travis-CI Build Status](https://travis-ci.org/caprice-j/ggbash.svg?branch=master)](https://travis-ci.org/caprice-j/ggbash)
+[![Travis-CI Build Status](https://travis-ci.org/caprice-j/ggconf.svg?branch=master)](https://travis-ci.org/caprice-j/ggconf)
 [![Build status](https://ci.appveyor.com/api/projects/status/vfia7i1hfowhpqhs?svg=true)](https://ci.appveyor.com/project/caprice-j/ggbash)
 [![codecov](https://codecov.io/gh/caprice-j/ggbash/branch/master/graph/badge.svg)](https://codecov.io/gh/caprice-j/ggbash)
 ![](http://www.r-pkg.org/badges/version/ggbash)

@@ -2,10 +2,8 @@
 
 export(find_first_by_prefix)
 export(get_analogue)
-export(parse_ggbash_aes)
 export(partial_unique)
 export(theme2)
 import(ggplot2)
-importFrom(sourcetools,tokenize_string)
 importFrom(stats,na.omit)
 importFrom(utils,adist)

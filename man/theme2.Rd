@@ -4,7 +4,7 @@
 \alias{theme2}
 \title{an enhanced version of ggplot2::theme()}
 \usage{
-theme2(..., as_string = FALSE)
+theme2(...)
 }
 \arguments{
 \item{...}{theme element specification (see examples below)}

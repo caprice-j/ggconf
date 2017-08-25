@@ -428,26 +428,6 @@ remove_theme_unit <- function(str = "g(x) + theme(l=unit(.5, 'cm'))") {
     return(out)
 }
 
-coat_adhoc_syntax_sugar <- function(
-    cmd = "gg(mtcars,mpg,hwy) + point(size = xyz(gear) +1, shape = 16 / 3 * 4)"
-){
-    out <- gsub("\\s*,\\s*", ",", cmd) # no comma
-    out <- gsub("\\s*=\\s*", "=", out)
-    out <- gsub("\\s*-\\s*", "-", out)
-    out <- gsub("\\s*/\\s*", "/", out)
-    out <- gsub("\\s*\\*\\s*", "\\*", out)
-    ggbashenv$layer_coll <- list()
-    ggbashenv$i_layer <- 0
-    set_layer_colnames(out)
-    out <- remove_aes(out)
-    out <- remove_element_whatever(out)
-    out <- remove_theme_unit(out)
-    out <- replace_plus(out)
-    out <- gsub("\\s*\\+\\s*", "\\+", out)
-    out <- remove_unnecessary_marks(out)
-    return(out)
-}
-
 #' the core function of ggbash
 #'
 #' @param cmd A character

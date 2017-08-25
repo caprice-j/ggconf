@@ -6,7 +6,7 @@
 \usage{
 get_analogue(fuzzy_input = "axs.txt", possibilities = c("axis.text",
   "axis.text.x"), n_top = 5, case_sensitive = FALSE, cost = c(insertions =
-  0.25, deletions = 3, substitutions = 2), threshold = 6)
+  0.25, deletions = 3, substitutions = 2), threshold = 6, debug = FALSE)
 }
 \arguments{
 \item{fuzzy_input}{A character. Typically user input.}
