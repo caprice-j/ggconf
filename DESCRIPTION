@@ -1,17 +1,16 @@
-Package: ggbash
+Package: ggconf
 Type: Package
-Title: A Simpler Syntax for ggplot2
-Version: 0.4.7
+Title: Simpler appearance modification of ggplot2
+Version: 0.1
 Authors@R: c(person('Yasutaka', 'Tanaka', , 'tnk.yasutaka@gmail.com', c('aut', 'cre')))
-Description: ggbash is a different and faster interface to write ggplot2 objects,
+Description: ggconf provides simpler interface for ggplot2::theme(),
     potentially saving 50% of your typing.
 License: MIT + file LICENSE
 Depends: R (>= 3.3.0)
 Imports: 
     tibble (>= 1.0.0),
     ggplot2 (>= 2.2.0),
-    rly (>= 1.3.0),
-    sourcetools (>= 0.1.5)
+    rly (>= 1.3.0)
 Suggests: 
     tidyverse,
     knitr,
@@ -19,14 +18,14 @@ Suggests:
     futile.logger (>= 1.4.3),
     hexbin,
     dplyr
-URL: https://github.com/caprice-j/ggbash
-BugReports: https://github.com/caprice-j/ggbash/issues
+URL: https://github.com/caprice-j/ggconf
+BugReports: https://github.com/caprice-j/ggconf/issues
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
 Collate:
-    'ggbash.R'
+    'ggconf.R'
     'prefix_match.R'
     'approx_match.R'
     'compiler.R'
