@@ -1,0 +1,14 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^README-.*\.png$
+^README-.*\.gif$
+^README_files$
+^album$
+^lab$
+^\.travis\.yml$
+^appveyor.yml$
+^.codeclimate.yml$
+^cran-comments.md$
+^NEWS\.md$
+^.lintr$

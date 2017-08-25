@@ -1,0 +1,46 @@
+# see: https://docs.travis-ci.com/user/languages/r
+
+language: r
+warnings_are_errors: true
+cache: packages
+#dist: trusty
+sudo: false
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - xclip
+      - gcc-4.9
+      - g++-4.9
+
+before_install: |
+  mkdir ~/.R
+  cat <<EOF > ~/.R/Makevars
+  CXX1X=g++-4.9
+  CXX1XSTD=-std=c++11
+
+#sudo: required
+#before_install:
+#  - "sudo apt-get install xclip --no-install-recommends --yes"
+
+env:
+ global:
+   - CRAN: http://cran.rstudio.com
+
+notifications:
+  email:
+    on_success: tnk.yasutaka@gmail.com
+    on_failure: tnk.yasutaka@gmail.com
+
+# r_github_packages for development version dependencies
+r_github_packages:
+  - jimhester/covr
+  - jimhester/fstrings
+#  - rstudio/rmarkdown
+
+after_success:
+  - Rscript -e 'covr::codecov()'
+  - Rscript -e 'covr::coveralls()'
+
+# r_binary_packages for faster build by precompiled Ubuntu packages
