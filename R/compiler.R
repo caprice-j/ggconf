@@ -2,7 +2,7 @@
 
 # CONSTAES : Constant Aesthetics
 # CHARAES : Character Aesthetics
-GGPLOT2_TOKENS <- c("1_NAME", "CONSTAES", "CHARAES", "0_THEME",
+GGPLOT2_TOKENS <- c("1_NAME", "CONSTAES", "CHARAES", "0_THEME", "COMMA",
                     "BOOLEAN", "QUOTED", "UNIT", "POUND", "ENDOFTOKEN"
                    )
 # SCALE "ScaleDiscrete" "Scale"         "ggproto"
@@ -77,6 +77,11 @@ Ggplot2Lexer <-
             t_POUND = function(re="#", t) {
                 dbgmsg("  t_POUND: ", t$value)
                 t$type <- "POUND"; return(t) 
+            },
+            # FIXME g + theme2(ax.txt(sz=20), ax.ttl(col=paste0('sky','blue'), sz=20))
+            t_COMMA = function(re=",", t) {
+                dbgmsg("  t_COMMA: ", t$value)
+                t$type <- "COMMA"; return(t) 
             },
             t_1_NAME      = function(re="(\\\"|')?[\\.a-zA-Z0-9_\\(\\)\\-][a-zA-Z_0-9\\.,=\\(\\)\\-\\+\\/\\*]*(\\\"|')?(\\s*inches|\\s*inch|\\s*in|\\s*cm)?", t) {
                 if (grepl("theme\\(", t$value)) {
@@ -249,8 +254,8 @@ Ggplot2Parser <-
                                          | QUOTED
                                          | BOOLEAN
                                          | UNIT
-                                         | CONSTAES theme_conf_list
-                                         | CHARAES theme_conf_list", p) {
+                                         | CONSTAES COMMA theme_conf_list
+                                         | CHARAES COMMA theme_conf_list", p) {
                 dbgmsg("p_theme_conf_list: ", p$get(2))
 
                 if (! is.null(ggbashenv$error)) {
@@ -315,7 +320,7 @@ Ggplot2Parser <-
                     # FIXME add spaces
                     p$set(1, a_conf)
                 } else {
-                    p$set(1, paste0(a_conf, ", ", p$get(3)))
+                    p$set(1, paste0(a_conf, ", ", p$get(4)))
                 }
             },
             p_error = function(p) {
