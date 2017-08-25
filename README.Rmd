@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 [![Issue Count](https://codeclimate.com/github/caprice-j/ggbash/badges/issue_count.svg)](https://codeclimate.com/github/caprice-j/ggbash/issues)
 [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 
-ggconf provides a simpler `ggplot2::theme()` syntax.
+ggconf provides `theme2()`, a simpler `ggplot2::theme()` interface.
 
 The goal of ggconf is to make ggplot2 more comfortable to use for every user,
 from beginners to professionals.

@@ -1,4 +1,4 @@
 library(testthat)
-library(ggbash)
+library(ggconf)
 
-test_check("ggbash")
+test_check("ggconf")

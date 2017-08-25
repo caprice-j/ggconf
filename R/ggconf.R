@@ -50,12 +50,6 @@ exec_ggconf <- function(raw_input="",
     
     built_ggplot2_obj <- eval(parse(text = ggobj_verbose))
     
-    if (grepl("ggbash_piped", ggobj)) {
-        # ggbash_piped should be internal state (not exposed to users)
-        # but removing ggbash_piped causes NOTE in R CMD check...
-        ggobj <- rm_piped_dataset(ggobj)
-    }
-    
     if (show_compiled)
         message("  ", ggobj)
     
@@ -80,8 +74,6 @@ exec_ggconf <- function(raw_input="",
 #' 2. partial match for each configuration (e.g. size by sz)
 #'
 #' @param ... theme element specification (see examples below)
-#' @param as_string return the built theme function call as string.
-#'                  Default is FALSE.
 #'
 #' @examples
 #' \dontrun{

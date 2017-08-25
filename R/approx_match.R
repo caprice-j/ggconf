@@ -11,6 +11,7 @@
 #'                  remove them from the result
 #'                  even if they are within top \code{n_top}.
 #'                  Default is 6.
+#' @param debug If true, it shows costs for top candidates.
 #'
 #' \code{get_analogue} is a key function
 #' for returning useful compile error message.

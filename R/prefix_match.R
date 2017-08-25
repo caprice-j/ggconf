@@ -22,7 +22,7 @@
 #' # returns list(Sepal.W = "Sepal.Width", Sepal.L = "Sepal.Length",
 #' #              Sp = "Species", P = "Petal.Width")
 #'
-#' @seealso \code{\link[base]{unique}}, \code{\link{show_dataset_column_indices}}
+#' @seealso \code{\link[base]{unique}}
 #'
 #' @export
 partial_unique <- function(
