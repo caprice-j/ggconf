@@ -2,7 +2,7 @@
 ggconf
 ======
 
-[![Travis-CI Build Status](https://travis-ci.org/caprice-j/ggbash.svg?branch=master)](https://travis-ci.org/caprice-j/ggbash) [![Build status](https://ci.appveyor.com/api/projects/status/vfia7i1hfowhpqhs?svg=true)](https://ci.appveyor.com/project/caprice-j/ggbash) [![codecov](https://codecov.io/gh/caprice-j/ggbash/branch/master/graph/badge.svg)](https://codecov.io/gh/caprice-j/ggbash) ![](http://www.r-pkg.org/badges/version/ggbash) <!-- [![Coverage Status](https://coveralls.io/repos/github/caprice-j/ggbash/badge.svg)](https://coveralls.io/github/caprice-j/ggbash) --> [![Issue Count](https://codeclimate.com/github/caprice-j/ggbash/badges/issue_count.svg)](https://codeclimate.com/github/caprice-j/ggbash/issues) [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
+[![Travis-CI Build Status](https://travis-ci.org/caprice-j/ggconf.svg?branch=master)](https://travis-ci.org/caprice-j/ggconf) [![Build status](https://ci.appveyor.com/api/projects/status/vfia7i1hfowhpqhs?svg=true)](https://ci.appveyor.com/project/caprice-j/ggbash) [![codecov](https://codecov.io/gh/caprice-j/ggbash/branch/master/graph/badge.svg)](https://codecov.io/gh/caprice-j/ggbash) ![](http://www.r-pkg.org/badges/version/ggbash) <!-- [![Coverage Status](https://coveralls.io/repos/github/caprice-j/ggbash/badge.svg)](https://coveralls.io/github/caprice-j/ggbash) --> [![Issue Count](https://codeclimate.com/github/caprice-j/ggbash/badges/issue_count.svg)](https://codeclimate.com/github/caprice-j/ggbash/issues) [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 
 ggconf provides a simpler `ggplot2::theme()` syntax.
 
@@ -29,12 +29,14 @@ g + ggplot2::theme(axis.text = element_text(size=20, face="bold"),
 
 ### How to use
 
-If you change your `theme` call into `theme2` call, ggconf would work in some of the cases. All of the followings return the same plot.
+If you change your `ggplot2::theme()` call into `ggconf::theme2()` call, ggconf would work. All of the followings return the same plot.
 
 ``` r
-g + theme( axis.text = element_text(size=20, face="bold")) # Case 1: Default (52 characters)
-g + theme2(axis.text = element_text(size=20, face="bold")) # Case 2: ggconf
-g + theme2(ax.txt(sz=20, f="bold"))                        # Case 3: ggconf  (32 characters)
+g + theme( axis.text = element_text(size=20, face="bold")) # Style 1: ggplot2 default (50 characters)
+g + theme2(axis.text = element_text(size=20, face="bold")) # Style 2: ggconf
+g + theme2(axis.text(size=20, face="bold"))                # Style 3: ggconf without element_text()
+g + theme2(ax.txt(sz=20, face="bold"))                     # Style 4: ggconf shorter but readable
+g + theme2(at(z=20, f="bold"))                             # Style 5: ggconf shortest (25 chars)
 ```
 
 Features
@@ -46,11 +48,11 @@ Features
 
 Even if the unique identification of specified elements (theme element names and theme configuration arguments) is not possible, `ggconf` anyway tries to execute its best guess instead of bluntly returning an error.
 
-For the above `theme2()` input `theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray60', sz=2), panel.bg(fill="white"))`, ggconf performs partial matches seven times.
+For `theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray60'), panel.bg(fill="white"))`, ggconf performs partial matches six times.
 
 -   **theme element names**
-    -   `ax.txt` matches `axis.text`. You can even write `a.t`.
-    -   `ax.ln` matches `axis.line`. You can even write `a.l`.
+    -   `ax.txt` matches `axis.text`. You can even write `a.t` or `at`.
+    -   `ax.ln` matches `axis.line`. You can even write `a.l` or `al`.
     -   `panel.bg` matches `panel.background`. You can even write `pnl.bg`.
         -   `p.bg` matches `plot.background` according to edit distance.
 -   **theme configuration arguments**

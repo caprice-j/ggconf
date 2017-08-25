@@ -129,7 +129,7 @@ Ggplot2Lexer <-
             }))
 
 dbgmsg <- function(...) {
-    if (exists("ggbash_debug"))
+    if (exists("ggconf_debug"))
         message(...)
 }
 
