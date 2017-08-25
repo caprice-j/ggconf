@@ -37,6 +37,7 @@ library(ggplot2)
 
 ```{r, eval=FALSE}
 g <- ggplot(iris) + geom_point(aes(Sepal.Width, Sepal.Length))
+
 g + theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray60', sz=2), panel.bg(fill="white"))
 ```
 
@@ -58,7 +59,7 @@ g + ggplot2::theme(axis.text = element_text(size=20, face="bold"),
 
 ### How to use 
 
-`ggbash::theme2()` can accept most of `ggplot2::theme()` inputs.
+If you change your `theme` call into `theme2` call, ggconf would work in some of the cases.
 All of the followings return the same plot.
 
 ```r
@@ -71,7 +72,7 @@ g + theme2(ax.txt(sz=20, fc="bold"))                       # Case 3: ggconf  (33
 
 ![ggbash Feature Overview](README-func.png)
 
-### 1. Partial Match
+### Partial Match
 
 Even if the unique identification of specified elements
 (theme element names and theme configuration arguments)
@@ -94,19 +95,8 @@ ggconf performs partial matches seven times.
     + `fc` matches `face` (fontface).
     + `col` matches `colour`.
 
-Any of the following commands return exactly the same plot.
+Users can select one of the styles which notation fits them best.    
 
-```{r, eval=FALSE}
-ggplot(iris)+geom_point(aes(x=Sepal.Width,y=Sepal.Length),colour="red",size=5)  # 78 characters
-ggplot iris +geom_point     x=Sepal.Width y=Sepal.Length  colour="red" size=5
-ggplot iris +     point       Sepal.Width   Sepal.Length  colour="red" size=5
-gg     iris +     point       Sepal.W       Sepal.L       col   ="red" siz =5
-gg     iris +     p           Sepal.W       Sepal.L       c     ="red" sz  =5
-g      iris +     p           Sepal.W       Sepal.L       c     ="red" s   =5   # 38 characters
-```
-    
-Users can select one of the styles which fits them best.    
-    
 ### 2. Fixit (Error Diagnostics)
 
 TBA
