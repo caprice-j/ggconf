@@ -34,6 +34,6 @@ partial_unique(c("Sepal.Width", "Sepal.Length", "Species", "Petal.Width"))
 
 }
 \seealso{
-\code{\link[base]{unique}}, \code{\link{show_dataset_column_indices}}
+\code{\link[base]{unique}}
 }
 

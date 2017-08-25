@@ -76,10 +76,9 @@ g + theme2(at(z=20, f="bold"))                             # Style 5: ggconf sho
 
 ### Partial Match
 
-Even if the unique identification of specified elements
-(theme element names and theme configuration arguments)
-is not possible,
-`ggconf` anyway tries to execute its best guess
+Even if the unique identification is not possible for specified elements
+(i.e. theme element names and theme configuration arguments),
+`ggconf` tries to execute its best estimate
 instead of bluntly returning an error.
 
 For `theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray60'), panel.bg(fill="white"))`,
@@ -95,9 +94,8 @@ ggconf performs partial matches six times.
 * __theme configuration arguments__
     + `sz` matches `size`.
     + `f` matches `face` (fontface).
+        + `fill` needs to write not just `f` but `fi`.
     + `col` matches `colour`.
-
-Users can select one of the styles which notation fits them best.    
 
 ### 2. Fixit (Error Diagnostics)
 

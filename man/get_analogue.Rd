@@ -21,9 +21,11 @@ is assumed to be pointed by fuzzy_input.}
 \item{cost}{A named vector}
 
 \item{threshold}{If costs are more than threshold,
-                 remove them from the result
-                 even if they are within top \code{n_top}.
-                 Default is 6.
+remove them from the result
+even if they are within top \code{n_top}.
+Default is 6.}
+
+\item{debug}{If true, it shows costs for top candidates.
 
 \code{get_analogue} is a key function
 for returning useful compile error message.}

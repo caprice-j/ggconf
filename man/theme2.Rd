@@ -8,9 +8,6 @@ theme2(...)
 }
 \arguments{
 \item{...}{theme element specification (see examples below)}
-
-\item{as_string}{return the built theme function call as string.
-Default is FALSE.}
 }
 \description{
 theme2() has an enhanced version of ggplot2::theme() in terms of:
