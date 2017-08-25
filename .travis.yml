@@ -10,7 +10,6 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - xclip
       - gcc-4.9
       - g++-4.9
 
@@ -36,7 +35,7 @@ notifications:
 # r_github_packages for development version dependencies
 r_github_packages:
   - jimhester/covr
-  - jimhester/fstrings
+#  - jimhester/fstrings
 #  - rstudio/rmarkdown
 
 after_success:

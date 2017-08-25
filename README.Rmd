@@ -18,10 +18,10 @@ knitr::opts_chunk$set(
 
 [![Travis-CI Build Status](https://travis-ci.org/caprice-j/ggconf.svg?branch=master)](https://travis-ci.org/caprice-j/ggconf)
 [![Build status](https://ci.appveyor.com/api/projects/status/vfia7i1hfowhpqhs?svg=true)](https://ci.appveyor.com/project/caprice-j/ggbash)
-[![codecov](https://codecov.io/gh/caprice-j/ggbash/branch/master/graph/badge.svg)](https://codecov.io/gh/caprice-j/ggbash)
-![](http://www.r-pkg.org/badges/version/ggbash)
+[![codecov](https://codecov.io/gh/caprice-j/ggconf/branch/master/graph/badge.svg)](https://codecov.io/gh/caprice-j/ggconf)
+![](http://www.r-pkg.org/badges/version/ggconf)
 <!-- [![Coverage Status](https://coveralls.io/repos/github/caprice-j/ggbash/badge.svg)](https://coveralls.io/github/caprice-j/ggbash) -->
-[![Issue Count](https://codeclimate.com/github/caprice-j/ggbash/badges/issue_count.svg)](https://codeclimate.com/github/caprice-j/ggbash/issues)
+[![Issue Count](https://codeclimate.com/github/caprice-j/ggconf/badges/issue_count.svg)](https://codeclimate.com/github/caprice-j/ggconf/issues)
 [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 
 ggconf provides `theme2()`, a simpler `ggplot2::theme()` interface.
@@ -57,7 +57,7 @@ g + ggplot2::theme(axis.text = element_text(size=20, face="bold"),
                    panel.background = element_rect(fill="white"))
 ```
 
-### How to use 
+### Getting Started
 
 If you change your `ggplot2::theme()` call into `ggconf::theme2()` call, ggconf would work.
 All of the followings return the same plot.
@@ -72,7 +72,7 @@ g + theme2(at(z=20, f="bold"))                             # Style 5: ggconf sho
 
 ## Features
 
-![ggbash Feature Overview](README-func.png)
+![ggconf Feature Overview](README-func.png)
 
 ### Partial Match
 
@@ -118,7 +118,6 @@ you might need `install.packages('rly')`.
 ## Goals
 
 The goal of ggconf is to make it more intuitive to finalize your plots.
-
     + adjust colours or lineweights
     + rotate axis labels
     + decide tick label intervals and limits
