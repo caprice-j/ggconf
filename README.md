@@ -2,11 +2,9 @@
 ggconf
 ======
 
-[![Travis-CI Build Status](https://travis-ci.org/caprice-j/ggconf.svg?branch=master)](https://travis-ci.org/caprice-j/ggconf) [![Build status](https://ci.appveyor.com/api/projects/status/vfia7i1hfowhpqhs?svg=true)](https://ci.appveyor.com/project/caprice-j/ggbash) [![codecov](https://codecov.io/gh/caprice-j/ggconf/branch/master/graph/badge.svg)](https://codecov.io/gh/caprice-j/ggconf) ![](http://www.r-pkg.org/badges/version/ggconf) <!-- [![Coverage Status](https://coveralls.io/repos/github/caprice-j/ggbash/badge.svg)](https://coveralls.io/github/caprice-j/ggbash) --> [![Issue Count](https://codeclimate.com/github/caprice-j/ggconf/badges/issue_count.svg)](https://codeclimate.com/github/caprice-j/ggconf/issues) [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
+[![Travis-CI Build Status](https://travis-ci.org/caprice-j/ggconf.svg?branch=master)](https://travis-ci.org/caprice-j/ggconf) [![Build status](https://ci.appveyor.com/api/projects/status/0tfqjechyio538um?svg=true)](https://ci.appveyor.com/project/caprice-j/ggconf) [![codecov](https://codecov.io/gh/caprice-j/ggconf/branch/master/graph/badge.svg)](https://codecov.io/gh/caprice-j/ggconf) ![](http://www.r-pkg.org/badges/version/ggconf) <!-- [![Coverage Status](https://coveralls.io/repos/github/caprice-j/ggbash/badge.svg)](https://coveralls.io/github/caprice-j/ggbash) --> [![Issue Count](https://codeclimate.com/github/caprice-j/ggconf/badges/issue_count.svg)](https://codeclimate.com/github/caprice-j/ggconf/issues) [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 
-ggconf provides `theme2()`, a simpler `ggplot2::theme()` interface.
-
-The goal of ggconf is to make ggplot2 more comfortable to use for every user, from beginners to professionals.
+ggconf provides `theme2()`, a flexible `ggplot2::theme()` interface.
 
 Usage
 -----
@@ -19,7 +17,7 @@ g + theme2(ax.txt(sz=20, f="bold"), ax.ln(col='gray60', sz=2), panel.bg(fill="wh
 
 ![](README-example-1.png)
 
-The following ggplot2 command will draw the same plot.
+The following ggplot2 command generates the same plot.
 
 ``` r
 g + ggplot2::theme(axis.text = element_text(size=20, face="bold"),
@@ -29,7 +27,7 @@ g + ggplot2::theme(axis.text = element_text(size=20, face="bold"),
 
 ### Getting Started
 
-If you change your `ggplot2::theme()` call into `ggconf::theme2()` call, ggconf would work. All of the followings return the same plot.
+If you replace your `ggplot2::theme()` call with `ggconf::theme2()` call, ggconf would work. All of the followings return the same plot.
 
 ``` r
 g + theme( axis.text = element_text(size=20, face="bold")) # Style 1: ggplot2 default (50 characters)
@@ -46,9 +44,9 @@ Features
 
 ### Partial Match
 
-Even if the unique identification is not possible for specified elements (i.e. theme element names and theme configuration arguments), `ggconf` tries to execute its best estimate instead of bluntly returning an error.
+Even if the unique identification is not possible for specified elements (e.g. theme element names or arguments), `ggconf` tries to execute its best estimate instead of just returning an error.
 
-For `theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray60'), panel.bg(fill="white"))`, ggconf performs partial matches six times.
+For the input `theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray60'), panel.bg(fill="white"))`, ggconf performs partial matches six times.
 
 -   **theme element names**
     -   `ax.txt` matches `axis.text`. You can even write `a.t` or `at`.
@@ -61,10 +59,6 @@ For `theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray60'), panel.bg(fill="white"
         -   `fill` needs to write not just `f` but `fi`.
     -   `col` matches `colour`.
 
-### 2. Fixit (Error Diagnostics)
-
-TBA
-
 Installation
 ------------
 
@@ -75,12 +69,72 @@ devtools::install_github("caprice-j/ggconf")
 
 -   If you get `no appender.console()` error, you might need `install.packages('rly')`. `packageVersion('rly')` should be at least 1.4.2.
 
--   This package is still in its infancy, and might contain several installation bugs.
+-   This package is still in its infancy and might contain several installation bugs.
+
+Examples
+--------
+
+#### Raw ggplot2 plot
+
+``` r
+library(dplyr)
+gg <- ggplot(mtcars[1:20, ] %>% tibble::rownames_to_column() %>% 
+             mutate(car_name = rowname, maker = gsub(" .*", "", car_name) ) ) + 
+      #geom_label(aes(mpg, qsec, label = substr(car_name, 1, 13), color=maker),
+      geom_point(aes(mpg, qsec, color=maker), size=8) +
+      geom_text(aes(mpg, qsec, label=substr(maker, 1, 2)), color="white", fontface="bold") +
+      labs(title = "Motor Trend Car Road Tests",
+           subtitle = "Top 20 rows are extracted for demonstration", 
+           caption = "Source: 1974 Motor Trend US magazine") + 
+           scale_x_continuous(breaks=seq(10,34, 4))
+gg
+
+gg + 
+  theme2(
+       text(f="bold", z=24, fmly="Times New Roman"),      # make all text thicker/larger 
+       pnl.bg(fill="white"),
+       lgd.box.margin(.2, .2, .2, .2, "cm"),
+       lgd.box.bg(color="black"),
+       lgd.key(fill="white"),
+       lgd.position("bottom"),
+       lgd.title(fmly="Consolas", c="royalblue"),         # equally-spaced font
+       axs.title(fmly="Consolas", c="royalblue"),         # colorize axis titles
+       axs.title.y(angle=0, vj=.5),                       # rotate and centerize y axis label
+       axs.txt(z=rel(1.1)),
+       axs.line(arrow=arrow(type="open", angle=20), z=2), # 
+       axs.tick(z=1),                                     # tick or ticks? It doesn't matter
+       axis.tick.len(.5, "cm"),
+       plt.subttl(f="italic", hjust=1),
+       plt.margin(.3, .3, .3, .1, "inch")                # adjust margins
+  )
+```
+
+``` r
+
+# For reference:
+gg +
+ theme(text = element_text(face="bold", size=24, family="Times New Roman"), 
+       panel.background = element_rect(fill="white"),
+       legend.box.margin = margin(.2, .2, .2, .2,"cm"), 
+       legend.box.background = element_rect(colour="black"), 
+       legend.key = element_rect(fill="white"), 
+       legend.position = ("bottom"), 
+       legend.title = element_text(family="Consolas", colour="royalblue"), 
+       axis.title = element_text(family="Consolas", colour="royalblue"), 
+       axis.title.y = element_text(angle=0, vjust=0.5), 
+       axis.text = element_text(size=rel(1.1)), 
+       axis.line = element_line(arrow=arrow(type="open", angle=20), size=2), 
+       axis.ticks = element_line(size=1), 
+       axis.ticks.length = unit(.5,"cm"), 
+       plot.subtitle = element_text(face="italic", hjust=1), 
+       plot.margin = margin(.3, .3, .3, .1,"inch")
+       )
+```
 
 Goals
 -----
 
-The goal of ggconf is to make it more intuitive to finalize your plots. + adjust colours or lineweights + rotate axis labels + decide tick label intervals and limits
+The goal of ggconf is to make it less stressful to finalize your plots. + adjust colours or lineweights + rotate axis labels + decide tick label intervals and limits
 
 <!--    + generate line-wrapped titles or legends -->
 Learning ggconf
@@ -93,20 +147,7 @@ Learning ggplot2 might be the best way to understand ggbash syntax. The [documen
 Other Works
 -----------
 
-As far as I know, there are no previous attempts to implement a higher-level language that [transcompiles](https://en.wikipedia.org/wiki/Source-to-source_compiler) to parts of ggplot2. Reports of similar attempts are welcomed.
-
-<!--
-
-About a different way to generate scatterplot matrix,
-`GGally::ggpairs` does the similar work. The major differences are:
-
-+ `GGally::ggpairs` output the scatterplot matrix in one plot,
-  while `ggbash` outputs each subplot as a plot (or as a file).
-+ `GGally::ggpairs` uses `ggplot2::ggsave` to save a plot with no default filename,
-  while `ggbash` uses `| png ` or `| pdf` pipe chains with auto-generated filenames.
-
--->
-`ggconf` draws inspiration from some other higher level programming languages including Bash, CoffeeScript, Ruby, and Lisp. Fixit is inspired by [Fix-It Hints](http://clang.llvm.org/docs/InternalsManual.html#fix-it-hints) in clang C++ compiler.
+`ggconf` draws inspiration from some other higher level programming languages including Bash, CoffeeScript, Ruby, and Lisp. <!-- Fixit is inspired by [Fix-It Hints](http://clang.llvm.org/docs/InternalsManual.html#fix-it-hints) in clang C++ compiler. -->
 
 Current Implementation Status
 -----------------------------

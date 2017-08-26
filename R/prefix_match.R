@@ -254,8 +254,9 @@ get_theme_elem_name_conf <- function(class = "element_text") {
         fields <- names(ggplot2::element_text())
     else if (class == "element_rect")
         fields <- names(ggplot2::element_rect())
-    else if (class == "element_line")
-        fields <- names(ggplot2::element_rect())
+    else if (class == "element_line") {
+        fields <- c(names(ggplot2::element_rect()), "arrow")
+    }
 
     conf <- fields[! fields %in% blacklist]
     return(conf)

@@ -21,6 +21,19 @@ test_that("theme2", {
     ee(theme2(l.bg(fill="red"), l.mgn(.5, .5, .5, .2, "inch")),
        theme(legend.background = element_rect(fill="red"),
              legend.margin = margin(.5, .5, .5, .2, "inch")))
+    
+    ee(theme2(axis.line(arrow=arrow(angle=30))),
+        theme(axis.line = element_line(arrow=arrow())))
+    ee(theme2(axis.line(arrow=arrow(angle=30, ends="last", 
+                                    type="open", length = unit(.25, "inches")))),
+        theme(axis.line = 
+                  element_line(arrow=arrow(angle=30, ends="last", 
+                                           type="open", 
+                                           length = unit(.25, "inches")))))
+
+    ee(theme2(a.txt(z=rel(1.0))),
+       theme(axis.text = element_text(size=rel(1.0))))
+    
 })
 
 test_that("partial-match", {

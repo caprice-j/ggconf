@@ -3,7 +3,8 @@
 # CONSTAES : Constant Aesthetics
 # CHARAES : Character Aesthetics
 GGPLOT2_TOKENS <- c("1_NAME", "CONSTAES", "CHARAES", "0_THEME", "COMMA",
-                    "BOOLEAN", "QUOTED", "UNIT", "POUND", "ENDOFTOKEN"
+                    "BOOLEAN", "QUOTED", "UNIT", "POUND", "ENDOFTOKEN",
+                    "0_FUNC"
                    )
 # SCALE "ScaleDiscrete" "Scale"         "ggproto"
 # GEOM/STAT "LayerInstance" "Layer"         "ggproto"
@@ -30,6 +31,7 @@ ggregex <- list(
     constaes   = "[a-z\\.]+=c\\([0-9\\.,\\)]+", # FIXME adhoc for binw=c(.1, .1)
     # Note: ggregex$constaes and t_CONSTAES rules are duplicated
     unit       = "[0-9\\.,]+\\s*['\"]?(cm|in|inch|inches)['\"]?",
+    arrow      = "arrow\\(.*\\)", # FIXME adhoc
     data       = "data="
 )
 
@@ -82,6 +84,11 @@ Ggplot2Lexer <-
             t_COMMA = function(re=",", t) {
                 dbgmsg("  t_COMMA: ", t$value)
                 t$type <- "COMMA"; return(t) 
+            },
+            t_0_FUNC = function(re="[a-z\\.]+=(arrow|rel|paste0)\\([^#]*\\)", t) {
+                # FIXME any function
+                dbgmsg("  t_0_FUNC: ", t$value)
+                t$type <- "0_FUNC"; return(t) 
             },
             t_1_NAME      = function(re="(\\\"|')?[\\.a-zA-Z0-9_\\(\\)\\-][a-zA-Z_0-9\\.,=\\(\\)\\-\\+\\/\\*]*(\\\"|')?(\\s*inches|\\s*inch|\\s*in|\\s*cm)?(\\\"|')?", t) {
                 if (grepl("theme\\(", t$value)) {
@@ -174,6 +181,7 @@ Ggplot2Parser <-
                 doc="theme_elem_list : theme_elem POUND theme_conf_list POUND 
                                 | theme_elem POUND theme_conf_list POUND theme_elem_list",
                 p) {
+                dbgmsg("p_theme_elem_list: ", p$get(2), " AND ", p$get(4))
                 elem <- p$get(2)
                 if (p$length() == 5) {
                     # last configuration
@@ -254,6 +262,8 @@ Ggplot2Parser <-
                                          | QUOTED
                                          | BOOLEAN
                                          | UNIT
+                                         | 0_FUNC
+                                         | 0_FUNC COMMA theme_conf_list
                                          | CONSTAES COMMA theme_conf_list
                                          | CHARAES COMMA theme_conf_list", p) {
                 dbgmsg("p_theme_conf_list: ", p$get(2))
@@ -285,8 +295,11 @@ Ggplot2Parser <-
                 }
 
                 before_equal <- gsub("=.*", "", conf)
-                after_equal  <- gsub(".*=", "", conf)
+                after_equal  <- gsub(paste0("^", before_equal, "="), "", conf)
+                # dbgmsg("    before_equal: ", before_equal)
+                # dbgmsg("     after_equal: ",  after_equal)
 
+                # FIXME this can be removed
                 if (before_equal == "c") {
                     # element_text has "face" and "color",
                     # and current edit distance algorithm matches "c"
