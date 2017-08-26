@@ -380,23 +380,6 @@ show_fixit_diagnostics <- function(
         m1("Is your theme element's name correct?")
         m2("The supplied string is \"", err$raw, "\", but")
         m3("maybe: ", paste0(similarv, collapse = ", "))
-    } else if (err$id == "p_layer_aes:column_prefix") {
-        colv <- ggbashenv$colv
-        similarv <- get_analogue(err$input, colv)$name
-
-        m1("The column name \"", err$input, "\" does not exist.")
-        m2("maybe: ", paste0(similarv, collapse = ", "))
-    } else if (err$id == "p_theme_conf_list:partial_match") {
-        m1("The column name \"", err$input, "\" does not exist.")
-        m2("maybe: ", paste0(similarv, collapse = ", "))
-    } else if (err$id == "p_aes_func:prefix_match") {
-        m1("The column name \"", err$input, "\" does not exist.")
-        m2("maybe: ", paste0(similarv, collapse = ", "))
-    } else if (err$id == "p_layer_raw_aes:partial_match") {
-        m1("The special parameter \"", err$input, "\" does not exist.")
-        m2("maybe: ", paste0(similarv, collapse = ", "))
-    } else if (err$id == "p_gg_init:dataset") {
-        m1("Is your data frame name correct?")
     } else if (err$id == "p_error:non_null") {
         m1("Did you specify a theme element name?")
         m2(" BAD: theme2(txt(3))")
