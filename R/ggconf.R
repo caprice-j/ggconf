@@ -41,6 +41,9 @@ exec_ggconf <- function(raw_input="",
     if (is.null(ggobj))
         return(FALSE) # ggobj is NULL when p_error() is called
 
+    if (length(ggobj) == 0)
+        return(FALSE)
+    
     if (grepl(GGPLOT2INVALIDTOKEN, ggobj)) {
         message("\nThe built ggplot2 object is :\n  ",
                 gsub("\\+ gg", "\\+ \n    gg", ggobj))

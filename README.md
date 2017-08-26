@@ -101,15 +101,15 @@ gg +
        lgd.box.bg(c="black"),
        lgd.key(fill="white"),
        lgd.position("bottom"),
-       lgd.title(fmly="Consolas", c="royalblue"),         # equally-spaced font
        lgd.txt(z=rel(.8)),
+       lgd.title(fmly="Consolas", c="royalblue"),         # equally-spaced font
        axs.title(fmly="Consolas", c="royalblue"),         # colorize axis titles
        axs.title.y(angle=0, vjust=.5),                    # rotate and centerize y axis label
        axs.txt(z=rel(1.1)),
        axs.line(arrow=arrow(type="open", angle=20), z=2), # 
        axs.tick(z=1),                                     # tick or ticks? It doesn't matter
-       axis.tick.len(.5, "cm"),
-       plt.subttl(f="italic", hjust=1),
+       axs.tick.len(.5, "cm"),
+       plt.subttl(f="plain", hjust=1),
        plt.margin(.3, .3, .3, .1, "inch")                # adjust margins
   )
 ```
@@ -118,24 +118,24 @@ gg +
 
 ``` r
 # If using ggplot2::theme():
-# gg +
-#  theme(text = element_text(face="bold", size=24, family="Times New Roman"), 
-#        panel.background = element_rect(fill="white"),
-#        legend.box.margin = margin(.2, .2, .2, .2,"cm"), 
-#        legend.box.background = element_rect(colour="black"), 
-#        legend.key = element_rect(fill="white"), 
-#        legend.position = ("bottom"), 
-#        legend.title = element_text(family="Consolas", colour="royalblue"), 
-#        legend.text = element_text(size=rel(.8)), 
-#        axis.title = element_text(family="Consolas", colour="royalblue"), 
-#        axis.title.y = element_text(angle=0, vjust=0.5), 
-#        axis.text = element_text(size=rel(1.1)), 
-#        axis.line = element_line(arrow=arrow(type="open", angle=20), size=2), 
-#        axis.ticks = element_line(size=1), 
-#        axis.ticks.length = unit(.5,"cm"), 
-#        plot.subtitle = element_text(face="italic", hjust=1), 
-#        plot.margin = margin(.3, .3, .3, .1,"inch")
-#        )
+gg + theme(
+  text = element_text(face="bold", size=24, family="Times New Roman"),
+  panel.background = element_rect(fill="white"),
+  legend.box.margin = margin(0.2,0.2,0.2,0.2,"cm"),
+  legend.box.background = element_rect(colour="black"),
+  legend.key = element_rect(fill="white"),
+  legend.position = "bottom",
+  legend.text = element_text(size=rel(0.8)),
+  legend.title = element_text(family="Consolas", colour="royalblue"),
+  axis.title = element_text(family="Consolas", colour="royalblue"),
+  axis.title.y = element_text(angle=0, vjust=0.5),
+  axis.text = element_text(size=rel(1.1)),
+  axis.line = element_line(arrow=arrow(type="open",angle=20), size=2),
+  axis.ticks = element_line(size=1),
+  axis.ticks.length = grid::unit(0.5,"cm"),
+  plot.subtitle = element_text(face="plain", hjust=1),
+  plot.margin = margin(0.3,0.3,0.3,0.1,"inch")
+  )
 ```
 
 Goals

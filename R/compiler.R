@@ -219,7 +219,9 @@ Ggplot2Parser <-
                     errinfo <-
                     list(
                         id = "p_theme_elem:prefix_match",
-                        type = "Prefix match for theme element name failed.",
+                        type = paste0("Prefix match for theme element name '",
+                                      p$get(2),
+                                      "' failed."),
                         raw = p$get(2),
                         input = elem_name_partial,
                         table = tdf$name
@@ -371,7 +373,7 @@ show_fixit_diagnostics <- function(
     m2 <- function(...) message("    ", ...)
     m3 <- function(...) message("      ", ...)
 
-    similarv <- get_analogue(err$input, err$table)$name
+    similarv <- get_analogue(err$input, err$table, threshold = 50)$name
 
     if (err$id == "p_theme_elem:prefix_match") {
 
@@ -396,9 +398,9 @@ show_fixit_diagnostics <- function(
     } else if (err$id == "p_gg_init:dataset") {
         m1("Is your data frame name correct?")
     } else if (err$id == "p_error:non_null") {
-        m1("Did you specify a geom before aesthetics?")
-        m2(" BAD: gg mtcars + mpg cyl")
-        m2("GOOD: gg mtcars + point mpg cyl")
+        m1("Did you specify a theme element name?")
+        m2(" BAD: theme2(txt(3))")
+        m2("GOOD: theme2(txt(size = 3))")
     } else if (err$id == "p_error:null") {
 
     }
