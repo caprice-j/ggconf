@@ -88,7 +88,20 @@ gg <- ggplot(mtcars[1:20, ] %>% tibble::rownames_to_column() %>%
            caption = "Source: 1974 Motor Trend US magazine") + 
            scale_x_continuous(breaks=seq(10,34, 4))
 gg
+```
 
+    #> 
+    #> Attaching package: 'dplyr'
+    #> The following objects are masked from 'package:stats':
+    #> 
+    #>     filter, lag
+    #> The following objects are masked from 'package:base':
+    #> 
+    #>     intersect, setdiff, setequal, union
+
+![](README-unnamed-chunk-7-1.png)
+
+``` r
 gg + 
   theme2(
        text(f="bold", z=24, fmly="Times New Roman"),      # make all text thicker/larger 
@@ -107,29 +120,29 @@ gg +
        plt.subttl(f="italic", hjust=1),
        plt.margin(.3, .3, .3, .1, "inch")                # adjust margins
   )
-```
 
-``` r
 
 # For reference:
-gg +
- theme(text = element_text(face="bold", size=24, family="Times New Roman"), 
-       panel.background = element_rect(fill="white"),
-       legend.box.margin = margin(.2, .2, .2, .2,"cm"), 
-       legend.box.background = element_rect(colour="black"), 
-       legend.key = element_rect(fill="white"), 
-       legend.position = ("bottom"), 
-       legend.title = element_text(family="Consolas", colour="royalblue"), 
-       axis.title = element_text(family="Consolas", colour="royalblue"), 
-       axis.title.y = element_text(angle=0, vjust=0.5), 
-       axis.text = element_text(size=rel(1.1)), 
-       axis.line = element_line(arrow=arrow(type="open", angle=20), size=2), 
-       axis.ticks = element_line(size=1), 
-       axis.ticks.length = unit(.5,"cm"), 
-       plot.subtitle = element_text(face="italic", hjust=1), 
-       plot.margin = margin(.3, .3, .3, .1,"inch")
-       )
+# gg +
+#  theme(text = element_text(face="bold", size=24, family="Times New Roman"), 
+#        panel.background = element_rect(fill="white"),
+#        legend.box.margin = margin(.2, .2, .2, .2,"cm"), 
+#        legend.box.background = element_rect(colour="black"), 
+#        legend.key = element_rect(fill="white"), 
+#        legend.position = ("bottom"), 
+#        legend.title = element_text(family="Consolas", colour="royalblue"), 
+#        axis.title = element_text(family="Consolas", colour="royalblue"), 
+#        axis.title.y = element_text(angle=0, vjust=0.5), 
+#        axis.text = element_text(size=rel(1.1)), 
+#        axis.line = element_line(arrow=arrow(type="open", angle=20), size=2), 
+#        axis.ticks = element_line(size=1), 
+#        axis.ticks.length = unit(.5,"cm"), 
+#        plot.subtitle = element_text(face="italic", hjust=1), 
+#        plot.margin = margin(.3, .3, .3, .1,"inch")
+#        )
 ```
+
+![](README-unnamed-chunk-9-1.png)
 
 Goals
 -----
