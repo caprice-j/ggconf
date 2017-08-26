@@ -13,7 +13,6 @@
 #' @param originalv a character vector to construct partial strings.
 #' @param i The smallest character of the resulted partial strings.
 #'          Sometimes too small i loses readability
-#'          such as in \code{\link{show_dataset_column_indices}}
 #'
 #' @return a list whose element names are partial strings and element values are original strings.
 #'

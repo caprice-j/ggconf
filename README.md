@@ -27,7 +27,7 @@ g + ggplot2::theme(axis.text = element_text(size=20, face="bold"),
                    panel.background = element_rect(fill="white"))
 ```
 
-### How to use
+### Getting Started
 
 If you change your `ggplot2::theme()` call into `ggconf::theme2()` call, ggconf would work. All of the followings return the same plot.
 
@@ -42,11 +42,11 @@ g + theme2(at(z=20, f="bold"))                             # Style 5: ggconf sho
 Features
 --------
 
-![ggbash Feature Overview](README-func.png)
+![ggconf Feature Overview](README-func.png)
 
 ### Partial Match
 
-Even if the unique identification of specified elements (theme element names and theme configuration arguments) is not possible, `ggconf` anyway tries to execute its best guess instead of bluntly returning an error.
+Even if the unique identification is not possible for specified elements (i.e. theme element names and theme configuration arguments), `ggconf` tries to execute its best estimate instead of bluntly returning an error.
 
 For `theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray60'), panel.bg(fill="white"))`, ggconf performs partial matches six times.
 
@@ -58,9 +58,8 @@ For `theme2(ax.txt(sz=20, fc="bold"), ax.ln(col='gray60'), panel.bg(fill="white"
 -   **theme configuration arguments**
     -   `sz` matches `size`.
     -   `f` matches `face` (fontface).
+        -   `fill` needs to write not just `f` but `fi`.
     -   `col` matches `colour`.
-
-Users can select one of the styles which notation fits them best.
 
 ### 2. Fixit (Error Diagnostics)
 
@@ -81,11 +80,7 @@ devtools::install_github("caprice-j/ggconf")
 Goals
 -----
 
-The goal of ggconf is to make it more intuitive to finalize your plots.
-
-    + adjust colours or lineweights
-    + rotate axis labels
-    + decide tick label intervals and limits
+The goal of ggconf is to make it more intuitive to finalize your plots. + adjust colours or lineweights + rotate axis labels + decide tick label intervals and limits
 
 <!--    + generate line-wrapped titles or legends -->
 Learning ggconf
