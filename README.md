@@ -77,7 +77,7 @@ Examples
 #### Raw ggplot2 plot
 
 ``` r
-library(dplyr)
+suppressPackageStartupMessages(library(dplyr))
 gg <- ggplot(mtcars[1:20, ] %>% tibble::rownames_to_column() %>% 
              mutate(car_name = rowname, maker = gsub(" .*", "", car_name) ) ) + 
       #geom_label(aes(mpg, qsec, label = substr(car_name, 1, 13), color=maker),
@@ -90,15 +90,6 @@ gg <- ggplot(mtcars[1:20, ] %>% tibble::rownames_to_column() %>%
 gg
 ```
 
-    #> 
-    #> Attaching package: 'dplyr'
-    #> The following objects are masked from 'package:stats':
-    #> 
-    #>     filter, lag
-    #> The following objects are masked from 'package:base':
-    #> 
-    #>     intersect, setdiff, setequal, union
-
 ![](README-unnamed-chunk-7-1.png)
 
 ``` r
@@ -107,12 +98,13 @@ gg +
        text(f="bold", z=24, fmly="Times New Roman"),      # make all text thicker/larger 
        pnl.bg(fill="white"),
        lgd.box.margin(.2, .2, .2, .2, "cm"),
-       lgd.box.bg(color="black"),
+       lgd.box.bg(c="black"),
        lgd.key(fill="white"),
        lgd.position("bottom"),
        lgd.title(fmly="Consolas", c="royalblue"),         # equally-spaced font
+       lgd.txt(z=rel(.8)),
        axs.title(fmly="Consolas", c="royalblue"),         # colorize axis titles
-       axs.title.y(angle=0, vj=.5),                       # rotate and centerize y axis label
+       axs.title.y(angle=0, vjust=.5),                    # rotate and centerize y axis label
        axs.txt(z=rel(1.1)),
        axs.line(arrow=arrow(type="open", angle=20), z=2), # 
        axs.tick(z=1),                                     # tick or ticks? It doesn't matter
@@ -120,9 +112,12 @@ gg +
        plt.subttl(f="italic", hjust=1),
        plt.margin(.3, .3, .3, .1, "inch")                # adjust margins
   )
+```
 
+![](README-unnamed-chunk-9-1.png)
 
-# For reference:
+``` r
+# If using ggplot2::theme():
 # gg +
 #  theme(text = element_text(face="bold", size=24, family="Times New Roman"), 
 #        panel.background = element_rect(fill="white"),
@@ -131,6 +126,7 @@ gg +
 #        legend.key = element_rect(fill="white"), 
 #        legend.position = ("bottom"), 
 #        legend.title = element_text(family="Consolas", colour="royalblue"), 
+#        legend.text = element_text(size=rel(.8)), 
 #        axis.title = element_text(family="Consolas", colour="royalblue"), 
 #        axis.title.y = element_text(angle=0, vjust=0.5), 
 #        axis.text = element_text(size=rel(1.1)), 
@@ -141,8 +137,6 @@ gg +
 #        plot.margin = margin(.3, .3, .3, .1,"inch")
 #        )
 ```
-
-![](README-unnamed-chunk-9-1.png)
 
 Goals
 -----
