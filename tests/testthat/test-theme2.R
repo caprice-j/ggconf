@@ -13,6 +13,14 @@ test_that("theme2", {
     theme(axis.text = element_text(size=20, face="bold"),
           axis.line = element_line(color = "black"))
     theme2(axis.text(size=20, face="bold"), axis.line(color="black"))
+    
+    # spaces under depth 2
+    ee(theme2(title(family="Times New Roman")),
+       theme(title = element_text(family="Times New Roman")))
+    
+    ee(theme2(l.bg(fill="red"), l.mgn(.5, .5, .5, .2, "inch")),
+       theme(legend.background = element_rect(fill="red"),
+             legend.margin = margin(.5, .5, .5, .2, "inch")))
 })
 
 test_that("partial-match", {

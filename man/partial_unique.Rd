@@ -10,8 +10,7 @@ partial_unique(originalv = c("mpg", "cyl", "disp", "hp", "drat"), i = 1)
 \item{originalv}{a character vector to construct partial strings.}
 
 \item{i}{The smallest character of the resulted partial strings.
-Sometimes too small i loses readability
-such as in \code{\link{show_dataset_column_indices}}}
+Sometimes too small i loses readability}
 }
 \value{
 a list whose element names are partial strings and element values are original strings.

@@ -19,8 +19,7 @@ exec_ggconf <- function(raw_input="",
     ggbashenv$const <- define_ggbash_constants()
     ggobj <- ""
     
-    cmd <- gsub(" ", "", raw_input)
-    cmd <- replace_paren(cmd)
+    cmd <- replace_marks(raw_input)
     dbgmsg("Input string:", cmd)
     cmd <- remove_element_whatever(cmd)
     cmd <- paste0(substr(cmd, 1, nchar(cmd)-1), "__ENDOFTOKEN")

@@ -29,7 +29,7 @@ ggregex <- list(
     charaes    = paste0("[a-z]+=('|\\\").*?('|\\\")"),
     constaes   = "[a-z\\.]+=c\\([0-9\\.,\\)]+", # FIXME adhoc for binw=c(.1, .1)
     # Note: ggregex$constaes and t_CONSTAES rules are duplicated
-    unit       = "[0-9\\.]+\\s*['\"]?(cm|in|inch|inches)['\"]?",
+    unit       = "[0-9\\.,]+\\s*['\"]?(cm|in|inch|inches)['\"]?",
     data       = "data="
 )
 
@@ -83,7 +83,7 @@ Ggplot2Lexer <-
                 dbgmsg("  t_COMMA: ", t$value)
                 t$type <- "COMMA"; return(t) 
             },
-            t_1_NAME      = function(re="(\\\"|')?[\\.a-zA-Z0-9_\\(\\)\\-][a-zA-Z_0-9\\.,=\\(\\)\\-\\+\\/\\*]*(\\\"|')?(\\s*inches|\\s*inch|\\s*in|\\s*cm)?", t) {
+            t_1_NAME      = function(re="(\\\"|')?[\\.a-zA-Z0-9_\\(\\)\\-][a-zA-Z_0-9\\.,=\\(\\)\\-\\+\\/\\*]*(\\\"|')?(\\s*inches|\\s*inch|\\s*in|\\s*cm)?(\\\"|')?", t) {
                 if (grepl("theme\\(", t$value)) {
                     t$type <- "0_THEME"
                     return(t)
@@ -272,15 +272,16 @@ Ggplot2Parser <-
 
                 if (grepl(ggregex$quoted, conf) &&
                     ! grepl("^element_|margin", ggbashenv$elem_class)) {
-                    message("quoted ", conf, " env$elemclass: ", ggbashenv$elem_class)
+                    dbgmsg("  quoted ", conf, " env$elemclass: ", ggbashenv$elem_class)
                     return(p$set(1, conf))
                 } else if (grepl(ggregex$boolean, conf)) {
-                    message("boolean ", conf, " env$elemclass: ", ggbashenv$elem_class)
+                    message("  boolean ", conf, " env$elemclass: ", ggbashenv$elem_class)
                     return(p$set(1, conf))
                 } else if (grepl(ggregex$unit, conf)) {
                     number <- gsub("[^0-9\\.]", "", conf)
                     this_unit <- gsub("[0-9\\. ]", "", conf)
-                    return(p$set(1, paste0(number, ",'", this_unit, "'")))
+                    dbgmsg("  unit ", conf, " env$elemclass: ", ggbashenv$elem_class)
+                    return(p$set(1, paste0(conf))) # e.g. c(2,2,2,2), "inch"
                 }
 
                 before_equal <- gsub("=.*", "", conf)
@@ -315,6 +316,7 @@ Ggplot2Parser <-
                 }
 
                 a_conf <- paste0(conf_name, "=", after_equal)
+                dbgmsg("   p_theme_conf_list->a_conf: ", a_conf)
 
                 if (p$length() == 2) {
                     # FIXME add spaces
@@ -394,23 +396,36 @@ replace_with_space <- function(input, i)
     paste0(substr(input, 1, i - 1), " ",
            substr(input, i + 1, nchar(input)))
 
-replace_paren <- function(input = "theme2(l.txt(size=12))") {
+replace_marks <- function(input = "theme2(l.txt(size=12))") {
     
     depth <- 0
     strlen <- nchar(input)
+    in_double_quote <- FALSE
+    in_quote <- FALSE
+    
+    inputv <- unlist(strsplit(input, ""))
+    
     for (i in 1:strlen) {
         char <- substr(input, i, i)
         if (char == "(")
             depth <- depth + 1
         else if (char == ")")
             depth <- depth - 1
+        else if (char == "'")
+            in_quote <- ifelse(in_quote, FALSE, TRUE)
+        else if (char == '"')
+            in_double_quote <- ifelse(in_double_quote, FALSE, TRUE)
+        
+        if (char == " " && (depth < 2 || (!in_double_quote && !in_quote)) ) {
+            inputv[i] <- ""
+        }
         if ((depth==2 && char == "(") ||
             (depth==1 && char == ")"))
-            input <- paste0(substr(input, 1, i-1), "#", substr(input, i+1, strlen))
+            inputv[i] <- "#"
         if (depth==1 && char == ",")
-            input <- paste0(substr(input, 1, i-1), " ", substr(input, i+1, strlen))
+            inputv[i] <- " "
     }
-    return(input)
+    return(paste0(inputv, collapse=""))
 }
 
 remove_element_whatever <- function(str = "g(x) + theme(l=element_text(sz=20))") {
