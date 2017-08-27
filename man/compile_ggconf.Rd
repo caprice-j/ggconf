@@ -2,16 +2,16 @@
 % Please edit documentation in R/compiler.R
 \name{compile_ggconf}
 \alias{compile_ggconf}
-\title{the core function of ggbash}
+\title{the core function of ggconf}
 \usage{
 compile_ggconf(cmd = "gg mtcars + p wt wt")
 }
 \arguments{
 \item{cmd}{A character
 
-compile_ggbash returns a built ggplot object.}
+compile_ggconf returns a built ggplot object.}
 }
 \description{
-the core function of ggbash
+the core function of ggconf
 }
 

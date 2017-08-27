@@ -17,6 +17,26 @@ theme2() has an enhanced version of ggplot2::theme() in terms of:
 \examples{
 \dontrun{
 
+ ggplot(mtcars) + geom_point(aes(wt, hp, color=as.factor(cyl)))
+  theme2(
+    text(f="bold", z=24, fmly="Times New Roman")
+    pnl.bg(fill="white"),
+    lgd.box.margin(.2, .2, .2, .2, "cm"),
+    lgd.box.bg(c="black"),
+    lgd.key(fill="white"),
+    lgd.position("bottom"),
+    lgd.txt(z=rel(.8)),
+    lgd.title(fmly="Consolas", c="royalblue"),  
+    axs.title(fmly="Consolas", c="royalblue"),  
+    axs.title.y(angle=0, vjust=.5),             
+    axs.txt(z=rel(1.1)),
+    axs.line(arrow=arrow(type="open", angle=20), z=2),
+    axs.tick(z=1),                              
+    axs.tick.len(.5, "cm"),
+    plt.subttl(f="plain", hjust=1),
+    plt.margin(.3, .3, .3, .1, "inch")          
+  )
+
 # all of the following three generate the same plot
 
 ggplot(mtcars) + geom_point(aes(wt, hp, color=cyl)) +
