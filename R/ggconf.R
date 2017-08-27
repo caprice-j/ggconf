@@ -16,7 +16,7 @@ NULL
 exec_ggconf <- function(raw_input="",
                         show_warn=TRUE, batch_mode=FALSE,
                         as_string = FALSE, show_compiled=TRUE){
-    ggbashenv$const <- define_ggbash_constants()
+    ggconfenv$const <- define_ggconf_constants()
     ggobj <- ""
     
     cmd <- replace_marks(raw_input)
@@ -27,9 +27,9 @@ exec_ggconf <- function(raw_input="",
     
     if(grepl("theme", raw_input)) {
         if (show_warn)
-            ggbashenv$show_amb_warn <- TRUE
+            ggconfenv$show_amb_warn <- TRUE
         else
-            ggbashenv$show_amb_warn <- FALSE
+            ggconfenv$show_amb_warn <- FALSE
         ggobj <- compile_ggconf(cmd)
         ggobj_verbose <- ggobj
         ggobj <- gsub("ggplot2::", "", ggobj)

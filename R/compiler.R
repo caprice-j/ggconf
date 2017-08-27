@@ -17,7 +17,7 @@ GGPLOT2_LITERALS <- c() # needed?
 GGPLOT2INVALIDTOKEN <- " <<INVALID_TOKEN_HERE>> "
 
 # MAYBE-LATER don't know how to pass variables between yacc's production rules
-ggbashenv <- new.env() # Note: This is a global variable.
+ggconfenv <- new.env() # Note: This is a global variable.
 
 ggregex <- list(
     plus_pipe  = "(\\+|\\|)\\s*",
@@ -35,9 +35,9 @@ ggregex <- list(
     data       = "data="
 )
 
-set_ggbashenv_warning <- function(){
-    if (is.null(ggbashenv$show_amb_warn))
-        ggbashenv$show_amb_warn <- TRUE
+set_ggconfenv_warning <- function(){
+    if (is.null(ggconfenv$show_amb_warn))
+        ggconfenv$show_amb_warn <- TRUE
 }
 
 Ggplot2Lexer <-
@@ -173,7 +173,7 @@ Ggplot2Parser <-
                 theme_str <- gsub("\\s|\\+", "", p$get(2))
 
                 # for column name search
-                ggbashenv$i_layer <- ggbashenv$i_layer + 1
+                ggconfenv$i_layer <- ggconfenv$i_layer + 1
 
                 p$set(1, paste0("ggplot2::theme("))
             },
@@ -190,7 +190,7 @@ Ggplot2Parser <-
                     # close ggplot2::element_*(
                     # MAYBE-LATER "none" is now ("none")
                 } else {
-                    #if (! ggbashenv$elem_class %in% c("logical", "character"))
+                    #if (! ggconfenv$elem_class %in% c("logical", "character"))
                         p$set(1, paste0(elem, "(", p$get(4), "), ", p$get(6)))
                     #else
                     #    p$set(1, paste0(elem, p$get(3), "), ", p$get(4)))
@@ -201,7 +201,7 @@ Ggplot2Parser <-
                 elem_name_partial <- gsub("\\(", "", p$get(2))
 
                 dbgmsg("p_theme_elem: ", elem_name_partial)
-                tdf <- ggbashenv$const$themedf
+                tdf <- ggconfenv$const$themedf
 
                 # 'axis.te:' will be 'axis.te'
                 #elem_name_partial <- gsub("\\:", "", p$get(2))
@@ -228,7 +228,7 @@ Ggplot2Parser <-
                         )
                     show_fixit_diagnostics(errinfo)
 
-                    ggbashenv$error <- TRUE
+                    ggconfenv$error <- TRUE
 
                     return(p$set(1, GGPLOT2INVALIDTOKEN))
 
@@ -239,7 +239,7 @@ Ggplot2Parser <-
                     return(p$set(1, GGPLOT2INVALIDTOKEN))
                 }
                 
-                ggbashenv$elem_class <- elem_class
+                ggconfenv$elem_class <- elem_class
 
                 if (grepl("^element_|margin", elem_class)) {
                     modifier <- "ggplot2::"
@@ -270,8 +270,8 @@ Ggplot2Parser <-
                                          | CHARAES COMMA theme_conf_list", p) {
                 dbgmsg("p_theme_conf_list: ", p$get(2))
 
-                if (! is.null(ggbashenv$error)) {
-                    ggbashenv$error <- NULL # FIXME too compicated
+                if (! is.null(ggconfenv$error)) {
+                    ggconfenv$error <- NULL # FIXME too compicated
                     # FIXME the error in o_theme_elem cannot stop
                     # even if return(p$set(1, GGPLOT2_INVALIDTOKEN)).
                     # It tries to execute this production rule,
@@ -283,16 +283,16 @@ Ggplot2Parser <-
                 conf <- p$get(2)
 
                 if (grepl(ggregex$quoted, conf) &&
-                    ! grepl("^element_|margin", ggbashenv$elem_class)) {
-                    dbgmsg("  quoted ", conf, " env$elemclass: ", ggbashenv$elem_class)
+                    ! grepl("^element_|margin", ggconfenv$elem_class)) {
+                    dbgmsg("  quoted ", conf, " env$elemclass: ", ggconfenv$elem_class)
                     return(p$set(1, conf))
                 } else if (grepl(ggregex$boolean, conf)) {
-                    message("  boolean ", conf, " env$elemclass: ", ggbashenv$elem_class)
+                    message("  boolean ", conf, " env$elemclass: ", ggconfenv$elem_class)
                     return(p$set(1, conf))
                 } else if (grepl(ggregex$unit, conf)) {
                     number <- gsub("[^0-9\\.]", "", conf)
                     this_unit <- gsub("[0-9\\. ]", "", conf)
-                    dbgmsg("  unit ", conf, " env$elemclass: ", ggbashenv$elem_class)
+                    dbgmsg("  unit ", conf, " env$elemclass: ", ggconfenv$elem_class)
                     return(p$set(1, paste0(conf))) # e.g. c(2,2,2,2), "inch"
                 }
 
@@ -313,7 +313,7 @@ Ggplot2Parser <-
                 }
 
                 # prefix match
-                input <- ggbashenv$elem_class
+                input <- ggconfenv$elem_class
                 tbl <- get_theme_elem_name_conf(input)
                 conf_name <- tbl[find_first_index(before_equal,
                                                   tbl, show_warn = FALSE)]
@@ -441,11 +441,11 @@ remove_theme_unit <- function(str = "g(x) + theme(l=unit(.5, 'cm'))") {
     return(out)
 }
 
-#' the core function of ggbash
+#' the core function of ggconf
 #'
 #' @param cmd A character
 #'
-#' compile_ggbash returns a built ggplot object.
+#' compile_ggconf returns a built ggplot object.
 #'
 compile_ggconf <- function(cmd = "gg mtcars + p wt wt"){
 

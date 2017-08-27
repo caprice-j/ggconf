@@ -9,16 +9,16 @@ find_first_index <- function(
     return(best_matched$index)
 }
 
-#' define constant values used in ggbash
+#' define constant values used in ggconf
 #'
-#' \code{define_ggbash_constants} has no side effect.
+#' \code{define_ggconf_constants} has no side effect.
 #' It is similar with the 'const' modifier in C or C++.
 #'
-#' One thing to note is \code{define_ggbash_constants} set implicitly
+#' One thing to note is \code{define_ggconf_constants} set implicitly
 #' the preference order of geom_name in ggplot2.
 #' For example, 'p' ambiguously matches to \code{\link[ggplot2]{geom_point}}
 #' and \code{\link[ggplot2]{geom_pointrange}},
-#' but ggbash automatically uses \code{\link[ggplot2]{geom_point}}
+#' but ggconf automatically uses \code{\link[ggplot2]{geom_point}}
 #' with a warning message about the ambiguity.
 #' This is a design choice based on the observation that
 #' \code{\link[ggplot2]{geom_point}} is often used
@@ -29,11 +29,11 @@ find_first_index <- function(
 #' @seealso The preference order is used
 #'          when doing partial match in GgplotParser.
 #'
-define_ggbash_constants <- function(){
+define_ggconf_constants <- function(){
     list(
         first_wd = getwd(),
         # BUILTIN command Vectors
-        # Note: the following commands are not included -- see exec_ggbash
+        # Note: the following commands are not included -- see exec_ggconf
         #       echo print quit exit
         builtinv = c("cd", "dir", "dir.create", "ls", "list",
                      "mkdir", "pwd", "rm", "rmdir", "setwd"),
