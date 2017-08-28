@@ -16,9 +16,12 @@ theme2() has an enhanced version of ggplot2::theme() in terms of:
 }
 \examples{
 
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+
+library(ggplot2)
 ggplot(mtcars) + geom_point(aes(wt, hp, color=as.factor(cyl))) +
   theme2(
-    text(f="bold", z=24, fmly="Times New Roman")
+    text(f="bold", z=24, fmly="Times New Roman"),
     pnl.bg(fill="white"),
     lgd.box.margin(.2, .2, .2, .2, "cm"),
     lgd.box.bg(c="black"),
@@ -49,6 +52,10 @@ ggplot(mtcars) + geom_point(aes(wt, hp, color=cyl)) +
 
 ggplot(mtcars) + geom_point(aes(wt, hp, color=cyl)) +
    theme2(txt(sz=20, f="bold"), aline(sz=2), l.key(c="black"))
+
+
+}
+
 
 }
 

@@ -14,19 +14,4 @@ show_fixit_diagnostics(err = list(id = "p_theme_elem:prefix_match", type =
 \description{
 Display useful debugging info for users
 }
-\examples{
-{
-
-  err <- list(
-    id = "p_theme_elem:prefix_match",
-    type = "Prefix match for theme element name failed.",
-    input = "axis.tx:",
-    elem_name = "axis.tx",
-    elem_table = c("axis.text", "axis.title")
-  )
-
-  show_fixit_diagnostics(err)
-}
-
-}
 

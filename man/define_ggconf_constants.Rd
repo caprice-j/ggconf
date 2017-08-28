@@ -16,12 +16,6 @@ For example, 'a.txt' ambiguously matches to 'axis.text' and 'axis.title',
 but ggconf automatically uses 'axis.text'
 with or without a warning message about the ambiguity.
 }
-\examples{
-{
-  const <- define_ggconf_constants()
-}
-
-}
 \seealso{
 The preference order is used
          when doing partial match in GgplotParser.

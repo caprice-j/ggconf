@@ -5,9 +5,6 @@
 #' @param show_warn boolean for showing ambiguous match warning
 #' @param debug show debugging message if true
 #' 
-#' @examples {
-#'   find_first_index("sz", c("stroke", "size", "shape"))
-#' }
 #' 
 find_first_index <- function(
     pattern = "sz",
@@ -30,9 +27,6 @@ find_first_index <- function(
 #' but ggconf automatically uses 'axis.text'
 #' with or without a warning message about the ambiguity.
 #'
-#' @examples {
-#'   const <- define_ggconf_constants()
-#' }
 #'
 #' @seealso The preference order is used
 #'          when doing partial match in GgplotParser.
@@ -75,16 +69,13 @@ define_ggconf_constants <- function(){
 
 #' get element tree clone
 #'
-#' @description {
-#    devtools::check() add a note about using ggplot2:::.element_tree
-#    because it is an internal object of other packages.
-#    Thus, a quick-and-dirty solution,
-#    I just copied the resulted data frame here.
+#' @description  {
+#'    devtools::check() add a note about using ggplot2:::.element_tree
+#'    because it is an internal object of other packages.
+#'    Thus, a quick-and-dirty solution,
+#'    I just copied the resulted data frame here.
 #' }
 #'
-#' @examples {
-#'   cloned <- get_element_tree_clone()
-#' }
 #'
 get_element_tree_clone <- function() {
 
@@ -170,9 +161,6 @@ get_element_tree_clone <- function() {
 
 #' get all theme element names
 #'
-#' @examples {
-#'   themedf <- get_all_theme_aes()
-#' }
 #'
 get_all_theme_aes <- function() {
 
@@ -187,9 +175,6 @@ get_all_theme_aes <- function() {
 #' @param class one of "element_text", "element_blank", "element_line", or
 #'        "element_rect"
 #'
-#' @examples {
-#'   tbl <- get_theme_elem_name_conf("element_text")
-#' }
 #'
 get_theme_elem_name_conf <- function(class = "element_text") {
     blacklist <- c("inherit.blank", "debug")

@@ -126,12 +126,6 @@ Ggplot2Lexer <-
 #'
 #' @param ... a sequence of objects passed to message()
 #' 
-#' @examples {
-#'   ggconf_dbgmsg("this will not be shown");
-#'   
-#'   ggconf_debug <- 1 # define ggconf_debug
-#'   ggconf_dbgmsg("current ggconf_debug is: ", ggconf_debug);
-#' }
 #'
 ggconf_dbgmsg <- function(...) {
     if (exists("ggconf_debug"))
@@ -356,18 +350,6 @@ Ggplot2Parser <-
 #'
 #' @param err A list of error information
 #'
-#' @examples {
-#' 
-#'   err <- list(
-#'     id = "p_theme_elem:prefix_match",
-#'     type = "Prefix match for theme element name failed.",
-#'     input = "axis.tx:",
-#'     elem_name = "axis.tx",
-#'     elem_table = c("axis.text", "axis.title")
-#'   )
-#' 
-#'   show_fixit_diagnostics(err)
-#' }
 #'
 show_fixit_diagnostics <- function(
     err = list(
@@ -404,9 +386,6 @@ show_fixit_diagnostics <- function(
 #'
 #' @param input An input string passed from users
 #'
-#' @examples {
-#'   replace_marks("theme2(l.txt(size=12), a.txt(color=paste0("gray", "90")))")
-#' }
 replace_marks <- function(input = "theme2(l.txt(size=12))") {
     
     depth <- 0
@@ -443,9 +422,6 @@ replace_marks <- function(input = "theme2(l.txt(size=12))") {
 #'
 #' @param input An input string passed from users
 #'
-#' @examples {
-#'   remove_element_whatever("theme(l=element_text(sz=20))")
-#' }
 remove_element_whatever <- function(input = "theme(l=element_text(sz=20))") {
     # assume "=" and "element_text" don't have spaces between them
     out <- gsub("=\\s+element_(text|rect|line|grob|blank)", "", input)
@@ -458,9 +434,6 @@ remove_element_whatever <- function(input = "theme(l=element_text(sz=20))") {
 #'
 #' compile_ggconf returns a built theme() object as string.
 #'
-#' @examples {
-#'   compile_ggconf('theme(a.txt#color=paste0("gray","90")#__ENDOFTOKEN')
-#' }
 #'
 compile_ggconf <- function(cmd = ""){
 

@@ -12,11 +12,6 @@ NULL
 #'                  not as a ggplot2 object. Default is FALSE.
 #' @param show_compiled Show the compiled ggplot2 executable command.
 #'                      Default is TRUE.
-#'
-#' @examples {
-#'   exec_ggconf('theme(a.txt(color = paste0("gray", "90")))')
-#' }
-#' 
 #' 
 #'
 exec_ggconf <- function(raw_input="",
@@ -85,10 +80,13 @@ exec_ggconf <- function(raw_input="",
 #' @param ... theme element specification (see examples below)
 #'
 #' @examples
-#'
+#' 
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#' 
+#' library(ggplot2)
 #' ggplot(mtcars) + geom_point(aes(wt, hp, color=as.factor(cyl))) +
 #'   theme2(
-#'     text(f="bold", z=24, fmly="Times New Roman")
+#'     text(f="bold", z=24, fmly="Times New Roman"),
 #'     pnl.bg(fill="white"),
 #'     lgd.box.margin(.2, .2, .2, .2, "cm"),
 #'     lgd.box.bg(c="black"),
@@ -119,6 +117,10 @@ exec_ggconf <- function(raw_input="",
 #'
 #' ggplot(mtcars) + geom_point(aes(wt, hp, color=cyl)) +
 #'    theme2(txt(sz=20, f="bold"), aline(sz=2), l.key(c="black"))
+#' 
+#' 
+#' }
+#' 
 #'
 #' @export
 theme2 <- function(...){
@@ -134,7 +136,7 @@ theme2 <- function(...){
     } else {
         elem_str <- paste0(elem_list, collapse=", ")
     }
-    # elem_list <- as.list(substitute(match.call()))[-1L]
+    # elem_list <- as.list(substitute(match.call()))[-1L];
 
     input <- paste0("theme(", elem_str, ")")
     ggconf_dbgmsg("theme2 input: ", input)

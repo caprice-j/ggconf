@@ -14,10 +14,4 @@ compile_ggconf returns a built theme() object as string.}
 \description{
 the core function of ggconf
 }
-\examples{
-{
-  compile_ggconf('theme(a.txt#color=paste0("gray","90")#__ENDOFTOKEN')
-}
-
-}
 
