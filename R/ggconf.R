@@ -13,23 +13,30 @@ NULL
 #' @param show_compiled Show the compiled ggplot2 executable command.
 #'                      Default is TRUE.
 #'
+#' @examples {
+#'   exec_ggconf('theme(a.txt(color = paste0("gray", "90")))')
+#' }
+#' 
+#' 
+#'
 exec_ggconf <- function(raw_input="",
                         show_warn=TRUE, batch_mode=FALSE,
                         as_string = FALSE, show_compiled=TRUE){
     ggconfenv$const <- define_ggconf_constants()
     ggobj <- ""
+    ggconf_dbgmsg("exec_ggconf() receives: ", raw_input)
     
     cmd <- replace_marks(raw_input)
-    dbgmsg("Input string:", cmd)
     cmd <- remove_element_whatever(cmd)
     cmd <- paste0(substr(cmd, 1, nchar(cmd)-1), "__ENDOFTOKEN")
-    dbgmsg("Input string:", cmd)
+    ggconf_dbgmsg("preprocessed string: ", cmd)
     
     if(grepl("theme", raw_input)) {
         if (show_warn)
             ggconfenv$show_amb_warn <- TRUE
         else
             ggconfenv$show_amb_warn <- FALSE
+        ggconf_dbgmsg("compile_ggconf receives: ", cmd)
         ggobj <- compile_ggconf(cmd)
         ggobj_verbose <- ggobj
         ggobj <- gsub("ggplot2::", "", ggobj)
@@ -78,9 +85,8 @@ exec_ggconf <- function(raw_input="",
 #' @param ... theme element specification (see examples below)
 #'
 #' @examples
-#' \dontrun{
 #'
-#'  ggplot(mtcars) + geom_point(aes(wt, hp, color=as.factor(cyl)))
+#' ggplot(mtcars) + geom_point(aes(wt, hp, color=as.factor(cyl))) +
 #'   theme2(
 #'     text(f="bold", z=24, fmly="Times New Roman")
 #'     pnl.bg(fill="white"),
@@ -112,11 +118,7 @@ exec_ggconf <- function(raw_input="",
 #'           legend.key(color="black"))
 #'
 #' ggplot(mtcars) + geom_point(aes(wt, hp, color=cyl)) +
-#'    theme2(text(sz=20, f="bold"), axis.line(sz=2),
-#'           legend.key(c="black"))
-#'
-#'
-#' }
+#'    theme2(txt(sz=20, f="bold"), aline(sz=2), l.key(c="black"))
 #'
 #' @export
 theme2 <- function(...){
@@ -135,7 +137,7 @@ theme2 <- function(...){
     # elem_list <- as.list(substitute(match.call()))[-1L]
 
     input <- paste0("theme(", elem_str, ")")
-    dbgmsg("theme2 input: ", input)
+    ggconf_dbgmsg("theme2 input: ", input)
     ggstr <-
         exec_ggconf(input, show_warn = FALSE,
                     batch_mode = TRUE, as_string = TRUE,

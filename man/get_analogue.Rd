@@ -35,9 +35,7 @@ return resulted strings of approximate string match
 }
 \examples{
 
-\dontrun{
 get_analogue("axis.txt", c("axis.text", "axis.text.x", "axis.ticks"))
-}
 # returns "axis.text" "axis.text.x" "axis.ticks"
 
 }

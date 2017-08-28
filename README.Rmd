@@ -38,7 +38,9 @@ g <- ggplot(iris) + geom_point(aes(Sepal.Width, Sepal.Length))
 g + theme2(ax.txt(sz=20, f="bold"), ax.ln(col='gray60', sz=2), panel.bg(fill="white"))
 ```
 
-```{r example, echo=FALSE}
+![ggconf Example](inst/image/README-ex.png)
+
+```{r example, echo=FALSE, eval=FALSE}
 g <- ggplot(iris) + geom_point(aes(Sepal.Width, Sepal.Length))
 g + theme(       axis.text = element_text(size=20),
                  axis.line = element_line(colour="gray60", size=2),
@@ -69,7 +71,7 @@ g + theme2(at(z=20, f="bold"))                             # Style 5: ggconf sho
 
 ## Features
 
-![ggconf Feature Overview](README-func.png)
+![ggconf Feature Overview](inst/image/README-func.png)
 
 ### Partial Match
 
@@ -126,7 +128,9 @@ gg
 
 ```
 
-```{r, echo=FALSE, fig.height=9, fig.width=10}
+![ggconf Example](inst/image/README-raw.png)
+
+```{r, echo=FALSE, eval=FALSE, fig.height=9, fig.width=10}
 suppressPackageStartupMessages(library(dplyr))
 gg <- ggplot(mtcars[1:20, ] %>% tibble::rownames_to_column() %>% 
              mutate(car_name = rowname, maker = gsub(" .*", "", car_name) ) ) + 
@@ -140,6 +144,9 @@ gg <- ggplot(mtcars[1:20, ] %>% tibble::rownames_to_column() %>%
 gg
 
 ```
+
+
+#### After finalization
 
 ```{r, eval=FALSE}
 gg + 
@@ -164,7 +171,9 @@ gg +
 
 ```
 
-```{r, echo=FALSE, fig.height=9, fig.width=10}
+![ggconf Example](inst/image/README-pop.png)
+
+```{r, echo=FALSE, eval=FALSE, fig.height=9, fig.width=10}
 gg +
 ggplot2::theme(text = ggplot2::element_text(face="bold", size=24, family="Times New Roman"), panel.background = ggplot2::element_rect(fill="white"), legend.box.margin = ggplot2::margin(0.2,0.2,0.2,0.2,"cm"), legend.box.background = ggplot2::element_rect(colour="black"), legend.key = ggplot2::element_rect(fill="white"), legend.position = ("bottom"), legend.text = ggplot2::element_text(size=rel(0.8)), legend.title = ggplot2::element_text(family="Consolas", colour="royalblue"), axis.title = ggplot2::element_text(family="Consolas", colour="royalblue"), axis.title.y = ggplot2::element_text(angle=0, vjust=0.5), axis.text = ggplot2::element_text(size=rel(1.1)), axis.line = ggplot2::element_line(arrow=arrow(type="open",angle=20), size=2), axis.ticks = ggplot2::element_line(size=1), axis.ticks.length = grid::unit(0.5,"cm"), plot.subtitle = ggplot2::element_text(face="plain", hjust=1), plot.margin = ggplot2::margin(0.3,0.3,0.3,0.1,"inch"))
 ```

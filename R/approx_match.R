@@ -18,9 +18,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{
 #' get_analogue("axis.txt", c("axis.text", "axis.text.x", "axis.ticks"))
-#' }
 #' # returns "axis.text" "axis.text.x" "axis.ticks"
 #'
 #' @importFrom utils adist

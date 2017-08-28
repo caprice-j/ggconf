@@ -1,18 +1,10 @@
-
-
 # CONSTAES : Constant Aesthetics
 # CHARAES : Character Aesthetics
 GGPLOT2_TOKENS <- c("1_NAME", "CONSTAES", "CHARAES", "0_THEME", "COMMA",
                     "BOOLEAN", "QUOTED", "UNIT", "POUND", "ENDOFTOKEN",
                     "0_FUNC"
                    )
-# SCALE "ScaleDiscrete" "Scale"         "ggproto"
-# GEOM/STAT "LayerInstance" "Layer"         "ggproto"
-# COORD "CoordCartesian" "Coord"          "ggproto"
-# FACET "FacetGrid" "Facet"     "ggproto"
-# labs ?
-# POSITION  "PositionDodge" "Position"      "ggproto"
-# THEME "theme" "gg"
+
 GGPLOT2_LITERALS <- c() # needed?
 GGPLOT2INVALIDTOKEN <- " <<INVALID_TOKEN_HERE>> "
 
@@ -35,11 +27,6 @@ ggregex <- list(
     data       = "data="
 )
 
-set_ggconfenv_warning <- function(){
-    if (is.null(ggconfenv$show_amb_warn))
-        ggconfenv$show_amb_warn <- TRUE
-}
-
 Ggplot2Lexer <-
     R6::R6Class(
         "Lexer",
@@ -50,7 +37,7 @@ Ggplot2Lexer <-
             info = "not-used-now",
             # Note: t_(function) defines precedences implicitly
             t_CONSTAES = function(re="[a-z\\.]+\\s*=\\s*-*[0-9\\./\\*-\\+:]*[0-9]", t) {
-                dbgmsg("  t_CONSTAES: ", t$value)
+                ggconf_dbgmsg("  t_CONSTAES: ", t$value)
                 if (grepl("^group=", t$value)) {
                     t$type <- "1_NAME"
                     # aes(group=1)
@@ -69,25 +56,25 @@ Ggplot2Lexer <-
             # global variables as defaults?
             # ggregex$charaes is falsely evaluated as empty string
             t_CHARAES = function(re="[a-z\\.]+\\s*=\\s*('|\\\").*?('|\\\")", t) {
-                dbgmsg("  t_CHARAES: ", t$value)
+                ggconf_dbgmsg("  t_CHARAES: ", t$value)
                 return(t)
             },
             t_0_THEME = function(re="theme\\(", t) { 
-                dbgmsg("  t_0_THEME: ", t$value)
+                ggconf_dbgmsg("  t_0_THEME: ", t$value)
                 t$type <- "0_THEME"; return(t) 
             },
             t_POUND = function(re="#", t) {
-                dbgmsg("  t_POUND: ", t$value)
+                ggconf_dbgmsg("  t_POUND: ", t$value)
                 t$type <- "POUND"; return(t) 
             },
             # FIXME g + theme2(ax.txt(sz=20), ax.ttl(col=paste0('sky','blue'), sz=20))
             t_COMMA = function(re=",", t) {
-                dbgmsg("  t_COMMA: ", t$value)
+                ggconf_dbgmsg("  t_COMMA: ", t$value)
                 t$type <- "COMMA"; return(t) 
             },
             t_0_FUNC = function(re="[a-z\\.]+=(arrow|rel|paste0)\\([^#]*\\)", t) {
                 # FIXME any function
-                dbgmsg("  t_0_FUNC: ", t$value)
+                ggconf_dbgmsg("  t_0_FUNC: ", t$value)
                 t$type <- "0_FUNC"; return(t) 
             },
             t_1_NAME      = function(re="(\\\"|')?[\\.a-zA-Z0-9_\\(\\)\\-][a-zA-Z_0-9\\.,=\\(\\)\\-\\+\\/\\*]*(\\\"|')?(\\s*inches|\\s*inch|\\s*in|\\s*cm)?(\\\"|')?", t) {
@@ -96,28 +83,28 @@ Ggplot2Lexer <-
                     return(t)
                 }
                 if (t$value == "__ENDOFTOKEN") {
-                    dbgmsg("  t_ENDOFTOKEN: ", t$value)
+                    ggconf_dbgmsg("  t_ENDOFTOKEN: ", t$value)
                     t$type <- "ENDOFTOKEN"
                     return(t)
                 }
                 if (grepl(ggregex$data, t$value)) {
-                    dbgmsg("  t_NAME: DATA ", t$value)
+                    ggconf_dbgmsg("  t_NAME: DATA ", t$value)
                     t$type <- "CONSTAES"
                 } else if (grepl(ggregex$constaes, t$value)) {
-                    dbgmsg("  t_NAME: CONSTAES ", t$value)
+                    ggconf_dbgmsg("  t_NAME: CONSTAES ", t$value)
                     t$type <- "CONSTAES"
                 } else if (grepl(ggregex$boolean, t$value)) {
-                    dbgmsg("  t_NAME: BOOLEAN ", t$value)
+                    ggconf_dbgmsg("  t_NAME: BOOLEAN ", t$value)
                     t$type <- "BOOLEAN"
                 } else if (grepl(ggregex$unit, t$value)) {
-                    dbgmsg("  t_NAME: UNIT ", t$value)
+                    ggconf_dbgmsg("  t_NAME: UNIT ", t$value)
                     t$type <- "UNIT"
                     # ex. LexToken(UNIT,.20 cm,1,50)
                 } else if (grepl(ggregex$quoted, t$value)) {
-                    dbgmsg("  t_NAME: QUOTED ", t$value)
+                    ggconf_dbgmsg("  t_NAME: QUOTED ", t$value)
                     t$type <- "QUOTED"
                 } else {
-                    dbgmsg("  t_NAME: ", t$value)
+                    ggconf_dbgmsg("  t_NAME: ", t$value)
                 }
                 return(t)
             },
@@ -135,7 +122,18 @@ Ggplot2Lexer <-
                 return(t)
             }))
 
-dbgmsg <- function(...) {
+#' display ggconf debug message
+#'
+#' @param ... a sequence of objects passed to message()
+#' 
+#' @examples {
+#'   ggconf_dbgmsg("this will not be shown");
+#'   
+#'   ggconf_debug <- 1 # define ggconf_debug
+#'   ggconf_dbgmsg("current ggconf_debug is: ", ggconf_debug);
+#' }
+#'
+ggconf_dbgmsg <- function(...) {
     if (exists("ggconf_debug"))
         message(...)
 }
@@ -152,12 +150,12 @@ Ggplot2Parser <-
             names = new.env(hash = TRUE),
             p_expression_func = function(
                     doc="expression : ggproto", p) {
-                dbgmsg("p_expression_func LAST")
+                ggconf_dbgmsg("p_expression_func LAST")
                 p$set(1, p$get(2))
             },
             p_ggproto_theme = function(doc="ggproto : theme_init ENDOFTOKEN
                                        | theme_init theme_elem_list ENDOFTOKEN", p) {
-                dbgmsg("p_ggproto_theme: ", p$get(2), " -- add ) ")
+                ggconf_dbgmsg("p_ggproto_theme: ", p$get(2), " -- add ) ")
                 if (p$length() == 3) {
                     end <- paste0(p$get(2), ")")
                     p$set(1, end)
@@ -168,7 +166,7 @@ Ggplot2Parser <-
             },
             p_theme_init = function(doc="theme_init : 0_THEME", p) {
                 # initialization
-                dbgmsg("p_theme_init: ", p$get(2), " -- add (")
+                ggconf_dbgmsg("p_theme_init: ", p$get(2), " -- add (")
                 # theme, theme_bw, theme_linedraw, ...
                 theme_str <- gsub("\\s|\\+", "", p$get(2))
 
@@ -181,7 +179,7 @@ Ggplot2Parser <-
                 doc="theme_elem_list : theme_elem POUND theme_conf_list POUND 
                                 | theme_elem POUND theme_conf_list POUND theme_elem_list",
                 p) {
-                dbgmsg("p_theme_elem_list: ", p$get(2), " AND ", p$get(4))
+                ggconf_dbgmsg("p_theme_elem_list: ", p$get(2), " AND ", p$get(4))
                 elem <- p$get(2)
                 if (p$length() == 5) {
                     # last configuration
@@ -200,7 +198,7 @@ Ggplot2Parser <-
             p_theme_elem = function(doc="theme_elem : 1_NAME", p) {
                 elem_name_partial <- gsub("\\(", "", p$get(2))
 
-                dbgmsg("p_theme_elem: ", elem_name_partial)
+                ggconf_dbgmsg("p_theme_elem: ", elem_name_partial)
                 tdf <- ggconfenv$const$themedf
 
                 # 'axis.te:' will be 'axis.te'
@@ -268,7 +266,7 @@ Ggplot2Parser <-
                                          | 0_FUNC COMMA theme_conf_list
                                          | CONSTAES COMMA theme_conf_list
                                          | CHARAES COMMA theme_conf_list", p) {
-                dbgmsg("p_theme_conf_list: ", p$get(2))
+                ggconf_dbgmsg("p_theme_conf_list: ", p$get(2))
 
                 if (! is.null(ggconfenv$error)) {
                     ggconfenv$error <- NULL # FIXME too compicated
@@ -284,7 +282,7 @@ Ggplot2Parser <-
 
                 if (grepl(ggregex$quoted, conf) &&
                     ! grepl("^element_|margin", ggconfenv$elem_class)) {
-                    dbgmsg("  quoted ", conf, " env$elemclass: ", ggconfenv$elem_class)
+                    ggconf_dbgmsg("  quoted ", conf, " env$elemclass: ", ggconfenv$elem_class)
                     return(p$set(1, conf))
                 } else if (grepl(ggregex$boolean, conf)) {
                     message("  boolean ", conf, " env$elemclass: ", ggconfenv$elem_class)
@@ -292,14 +290,14 @@ Ggplot2Parser <-
                 } else if (grepl(ggregex$unit, conf)) {
                     number <- gsub("[^0-9\\.]", "", conf)
                     this_unit <- gsub("[0-9\\. ]", "", conf)
-                    dbgmsg("  unit ", conf, " env$elemclass: ", ggconfenv$elem_class)
+                    ggconf_dbgmsg("  unit ", conf, " env$elemclass: ", ggconfenv$elem_class)
                     return(p$set(1, paste0(conf))) # e.g. c(2,2,2,2), "inch"
                 }
 
                 before_equal <- gsub("=.*", "", conf)
                 after_equal  <- gsub(paste0("^", before_equal, "="), "", conf)
-                # dbgmsg("    before_equal: ", before_equal)
-                # dbgmsg("     after_equal: ",  after_equal)
+                # ggconf_dbgmsg("    before_equal: ", before_equal)
+                # ggconf_dbgmsg("     after_equal: ",  after_equal)
 
                 # FIXME this can be removed
                 if (before_equal == "c") {
@@ -331,7 +329,7 @@ Ggplot2Parser <-
                 }
 
                 a_conf <- paste0(conf_name, "=", after_equal)
-                dbgmsg("   p_theme_conf_list->a_conf: ", a_conf)
+                ggconf_dbgmsg("   p_theme_conf_list->a_conf: ", a_conf)
 
                 if (p$length() == 2) {
                     # FIXME add spaces
@@ -357,6 +355,19 @@ Ggplot2Parser <-
 #' Display useful debugging info for users
 #'
 #' @param err A list of error information
+#'
+#' @examples {
+#' 
+#'   err <- list(
+#'     id = "p_theme_elem:prefix_match",
+#'     type = "Prefix match for theme element name failed.",
+#'     input = "axis.tx:",
+#'     elem_name = "axis.tx",
+#'     elem_table = c("axis.text", "axis.title")
+#'   )
+#' 
+#'   show_fixit_diagnostics(err)
+#' }
 #'
 show_fixit_diagnostics <- function(
     err = list(
@@ -389,11 +400,13 @@ show_fixit_diagnostics <- function(
     }
 }
 
-# FIXME parentheses for no equal case
-replace_with_space <- function(input, i)
-    paste0(substr(input, 1, i - 1), " ",
-           substr(input, i + 1, nchar(input)))
-
+#' replace some marks for later ggconf parsing
+#'
+#' @param input An input string passed from users
+#'
+#' @examples {
+#'   replace_marks("theme2(l.txt(size=12), a.txt(color=paste0("gray", "90")))")
+#' }
 replace_marks <- function(input = "theme2(l.txt(size=12))") {
     
     depth <- 0
@@ -426,34 +439,36 @@ replace_marks <- function(input = "theme2(l.txt(size=12))") {
     return(paste0(inputv, collapse=""))
 }
 
-remove_element_whatever <- function(str = "g(x) + theme(l=element_text(sz=20))") {
+#' remove element_* function calls
+#'
+#' @param input An input string passed from users
+#'
+#' @examples {
+#'   remove_element_whatever("theme(l=element_text(sz=20))")
+#' }
+remove_element_whatever <- function(input = "theme(l=element_text(sz=20))") {
     # assume "=" and "element_text" don't have spaces between them
-    out <- gsub("=\\s+element_(text|rect|line|grob|blank)", "", str)
-    return(out)
-}
-
-remove_theme_unit <- function(str = "g(x) + theme(l=unit(.5, 'cm'))") {
-
-    quote_removed <- gsub("\"|'", "", gsub(".*=unit(.*?)\\).*", "\\1\\)", str))
-    out <- gsub("=unit\\([^\\)]*\\)", "%%%%%", str)
-    out <- gsub("%%%%%", quote_removed, out)
-    # quotes should be removed here because in parse I defined "QUOTED" token
+    out <- gsub("=\\s+element_(text|rect|line|grob|blank)", "", input)
     return(out)
 }
 
 #' the core function of ggconf
 #'
-#' @param cmd A character
+#' @param cmd preprocessed characters
 #'
-#' compile_ggconf returns a built ggplot object.
+#' compile_ggconf returns a built theme() object as string.
 #'
-compile_ggconf <- function(cmd = "gg mtcars + p wt wt"){
+#' @examples {
+#'   compile_ggconf('theme(a.txt#color=paste0("gray","90")#__ENDOFTOKEN')
+#' }
+#'
+compile_ggconf <- function(cmd = ""){
 
     lexer <- rly::lex(Ggplot2Lexer)
     parser <- rly::yacc(Ggplot2Parser)
 
     ggobj <- parser$parse(cmd, lexer)
-    dbgmsg("ggobj: ", ggobj)
+    ggconf_dbgmsg("ggobj: ", ggobj)
     info <- lexer$instance$info # access internal variables
     return(ggobj)
 }

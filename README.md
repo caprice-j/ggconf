@@ -15,7 +15,7 @@ g <- ggplot(iris) + geom_point(aes(Sepal.Width, Sepal.Length))
 g + theme2(ax.txt(sz=20, f="bold"), ax.ln(col='gray60', sz=2), panel.bg(fill="white"))
 ```
 
-![](README-example-1.png)
+![ggconf Example](inst/image/README-ex.png)
 
 The following ggplot2 command generates the same plot.
 
@@ -40,7 +40,7 @@ g + theme2(at(z=20, f="bold"))                             # Style 5: ggconf sho
 Features
 --------
 
-![ggconf Feature Overview](README-func.png)
+![ggconf Feature Overview](inst/image/README-func.png)
 
 ### Partial Match
 
@@ -90,7 +90,9 @@ gg <- ggplot(mtcars[1:20, ] %>% tibble::rownames_to_column() %>%
 gg
 ```
 
-![](README-unnamed-chunk-7-1.png)
+![ggconf Example](inst/image/README-raw.png)
+
+#### After finalization
 
 ``` r
 gg + 
@@ -114,7 +116,7 @@ gg +
   )
 ```
 
-![](README-unnamed-chunk-9-1.png)
+![ggconf Example](inst/image/README-pop.png)
 
 ``` r
 # If using ggplot2::theme():

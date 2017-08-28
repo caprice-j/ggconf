@@ -1,3 +1,14 @@
+#' define constant values used in ggconf
+#'
+#' @param pattern  the pattern string
+#' @param table a table of string to be matched
+#' @param show_warn boolean for showing ambiguous match warning
+#' @param debug show debugging message if true
+#' 
+#' @examples {
+#'   find_first_index("sz", c("stroke", "size", "shape"))
+#' }
+#' 
 find_first_index <- function(
     pattern = "sz",
     table = c("x", "y", "size", "shape", "colour", "fill", "alpha", "stroke"),
@@ -12,19 +23,16 @@ find_first_index <- function(
 #' define constant values used in ggconf
 #'
 #' \code{define_ggconf_constants} has no side effect.
-#' It is similar with the 'const' modifier in C or C++.
 #'
 #' One thing to note is \code{define_ggconf_constants} set implicitly
 #' the preference order of geom_name in ggplot2.
-#' For example, 'p' ambiguously matches to \code{\link[ggplot2]{geom_point}}
-#' and \code{\link[ggplot2]{geom_pointrange}},
-#' but ggconf automatically uses \code{\link[ggplot2]{geom_point}}
-#' with a warning message about the ambiguity.
-#' This is a design choice based on the observation that
-#' \code{\link[ggplot2]{geom_point}} is often used
-#' more frequently than \code{\link[ggplot2]{geom_pointrange}}.
-#' In order to use \code{\link[ggplot2]{geom_pointrange}},
-#' at least 6 characters ('pointr') is needed.
+#' For example, 'a.txt' ambiguously matches to 'axis.text' and 'axis.title',
+#' but ggconf automatically uses 'axis.text'
+#' with or without a warning message about the ambiguity.
+#'
+#' @examples {
+#'   const <- define_ggconf_constants()
+#' }
 #'
 #' @seealso The preference order is used
 #'          when doing partial match in GgplotParser.
@@ -65,12 +73,21 @@ define_ggconf_constants <- function(){
     )
 }
 
+#' get element tree clone
+#'
+#' @description {
+#    devtools::check() add a note about using ggplot2:::.element_tree
+#    because it is an internal object of other packages.
+#    Thus, a quick-and-dirty solution,
+#    I just copied the resulted data frame here.
+#' }
+#'
+#' @examples {
+#'   cloned <- get_element_tree_clone()
+#' }
+#'
 get_element_tree_clone <- function() {
 
-    # devtools::check() add a note about using ggplot2:::.element_tree
-    # because it is an internal object of other packages.
-    # Thus, a quick-and-dirty solution,
-    # I just copied the resulted data frame here.
     #
     # This is done for ggplot2 2.2.1 (commit 464e0f3) on January 6, 2017.
 
@@ -151,6 +168,12 @@ get_element_tree_clone <- function() {
     return(aes_info)
 }
 
+#' get all theme element names
+#'
+#' @examples {
+#'   themedf <- get_all_theme_aes()
+#' }
+#'
 get_all_theme_aes <- function() {
 
     aes_info <- get_element_tree_clone()
@@ -159,6 +182,15 @@ get_all_theme_aes <- function() {
     return(aes_info)
 }
 
+#' get all theme element configurations
+#'
+#' @param class one of "element_text", "element_blank", "element_line", or
+#'        "element_rect"
+#'
+#' @examples {
+#'   tbl <- get_theme_elem_name_conf("element_text")
+#' }
+#'
 get_theme_elem_name_conf <- function(class = "element_text") {
     blacklist <- c("inherit.blank", "debug")
 

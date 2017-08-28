@@ -15,9 +15,8 @@ theme2() has an enhanced version of ggplot2::theme() in terms of:
 2. partial match for each configuration (e.g. size by sz)
 }
 \examples{
-\dontrun{
 
- ggplot(mtcars) + geom_point(aes(wt, hp, color=as.factor(cyl)))
+ggplot(mtcars) + geom_point(aes(wt, hp, color=as.factor(cyl))) +
   theme2(
     text(f="bold", z=24, fmly="Times New Roman")
     pnl.bg(fill="white"),
@@ -49,11 +48,7 @@ ggplot(mtcars) + geom_point(aes(wt, hp, color=cyl)) +
           legend.key(color="black"))
 
 ggplot(mtcars) + geom_point(aes(wt, hp, color=cyl)) +
-   theme2(text(sz=20, f="bold"), axis.line(sz=2),
-          legend.key(c="black"))
-
-
-}
+   theme2(txt(sz=20, f="bold"), aline(sz=2), l.key(c="black"))
 
 }
 

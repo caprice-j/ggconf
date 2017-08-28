@@ -4,14 +4,20 @@
 \alias{compile_ggconf}
 \title{the core function of ggconf}
 \usage{
-compile_ggconf(cmd = "gg mtcars + p wt wt")
+compile_ggconf(cmd = "")
 }
 \arguments{
-\item{cmd}{A character
+\item{cmd}{preprocessed characters
 
-compile_ggconf returns a built ggplot object.}
+compile_ggconf returns a built theme() object as string.}
 }
 \description{
 the core function of ggconf
+}
+\examples{
+{
+  compile_ggconf('theme(a.txt#color=paste0("gray","90")#__ENDOFTOKEN')
+}
+
 }
 

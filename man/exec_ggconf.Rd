@@ -25,4 +25,12 @@ Default is TRUE.}
 \description{
 execute raw ggconf commands
 }
+\examples{
+{
+  exec_ggconf('theme(a.txt(color = paste0("gray", "90")))')
+}
+
+
+
+}
 

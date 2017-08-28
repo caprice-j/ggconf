@@ -1,11 +1,10 @@
 Package: ggconf
 Type: Package
-Title: Simpler appearance modification of ggplot2
+Title: Simpler Appearance Modification of 'ggplot2'
 Version: 0.1
 Authors@R: c(person('Yasutaka', 'Tanaka', , 'tnk.yasutaka@gmail.com', c('aut', 'cre')))
-Description: ggconf provides simpler interface for ggplot2::theme(),
-    potentially saving 50% of your typing.
-License: MIT + file LICENSE
+Description: A flexible interface for ggplot2::theme(), potentially saving 50% of your typing.
+License: GPL-3
 Depends: R (>= 3.3.0)
 Imports: 
     tibble (>= 1.0.0),
