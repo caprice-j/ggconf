@@ -12,7 +12,10 @@ Usage
 ``` r
 g <- ggplot(iris) + geom_point(aes(Sepal.Width, Sepal.Length))
 
-g + theme2(ax.txt(sz=20, f="bold"), ax.line(col='gray60', sz=2), panel.bg(fill="white"))
+g + theme2(ax.txt(sz=20, f="bold"),
+           ax.line(col='gray60', sz=2),
+           panel.bg(fill="white")
+          )
 ```
 
 ![ggconf Example](inst/image/README-ex.png)
@@ -22,7 +25,8 @@ The following ggplot2 command generates the same plot.
 ``` r
 g + ggplot2::theme(axis.text = element_text(size=20, face="bold"),
                    axis.line = element_line(colour="gray60", size=2),
-                   panel.background = element_rect(fill="white"))
+                   panel.background = element_rect(fill="white")
+                  )
 ```
 
 Getting Started
@@ -68,7 +72,7 @@ Installation
 devtools::install_github("caprice-j/ggconf")
 ```
 
--   If you get `no appender.console()` error, please `install.packages('rly')`. `packageVersion('rly')` should be at least 1.4.2.
+-   If you get `no appender.console()` error, please `install.packages('rly')`.
 
 Example
 -------
