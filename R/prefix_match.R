@@ -63,7 +63,6 @@ define_ggconf_constants <- function(){
         ),
         savev = c("png", "pdf"),
         themedf = get_all_theme_aes()
-        # TODO implement stat like stat_smooth
     )
 }
 

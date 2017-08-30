@@ -343,7 +343,6 @@ show_fixit_diagnostics <- function(
         elem_table = c("axis.text", "axis.title")
     )
 ) {
-    # MAYBE-LATER Is it possible to get the built entire ggplot object here?
     message("COMPILE ERROR: ", err$type)
     m1 <- function(...) message("  ", ...)
     m2 <- function(...) message("    ", ...)
