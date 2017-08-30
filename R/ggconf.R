@@ -104,6 +104,10 @@ exec_ggconf <- function(raw_input="",
 #'     plt.margin(.3, .3, .3, .1, "inch")          
 #'   )
 #'
+#' 
+#' ggplot(mtcars) + geom_point(aes(wt, hp, color=cyl)) +
+#'    theme2(a.txt(family = c("Consolas", "Times")[1]))
+#'
 #' # all of the following three generate the same plot
 #'
 #' ggplot(mtcars) + geom_point(aes(wt, hp, color=cyl)) +
@@ -117,6 +121,7 @@ exec_ggconf <- function(raw_input="",
 #'
 #' ggplot(mtcars) + geom_point(aes(wt, hp, color=cyl)) +
 #'    theme2(txt(sz=20, f="bold"), aline(sz=2), l.key(c="black"))
+#' 
 #' 
 #' 
 #' }

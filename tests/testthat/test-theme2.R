@@ -80,6 +80,17 @@ test_that("theme2", {
     
     ee(theme2(ax.ttl(col=paste0('sky','blue'))),
        theme(axis.title = element_text(color=paste0('sky','blue'))))
+    
+    ee(theme2(a.txt(family=c("consolas", "Times New Roman")[1])),
+       theme(axis.text = element_text(family="consolas")))
+    
+    ee(theme2(a.txt(family=c("consolas", "Times New Roman")[2])),
+       theme(axis.text = element_text(family="Times New Roman")))
+    
+    my.se_1_ection <<- 1
+    ee(theme2(a.txt(family=c("consolas", "Times New Roman")[my.se_1_ection])),
+       theme(axis.text = element_text(family="consolas")))
+    
 })
 
 test_that("partial-match", {

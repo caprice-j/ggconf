@@ -22,7 +22,8 @@ ggregex <- list(
     charaes    = paste0("[a-z]+=('|\\\").*?('|\\\")"),
     constaes   = "[a-z\\.]+=c\\([0-9\\.,\\)]+", # FIXME adhoc for binw=c(.1, .1)
     # Note: ggregex$constaes and t_CONSTAES rules are duplicated
-    unit       = "[0-9\\.,]+\\s*['\"]?(cm|in|inch|inches)['\"]?"
+    unit       = "[0-9\\.,]+\\s*['\"]?(cm|in|inch|inches)['\"]?",
+    func       = "[a-z\\.]+=(arrow|rel|paste|paste0|c)\\([^#]*\\)"
 )
 
 Ggplot2Lexer <-
@@ -69,10 +70,10 @@ Ggplot2Lexer <-
                 ggconf_dbgmsg("  t_COMMA: ", t$value)
                 t$type <- "COMMA"; return(t) 
             },
-            t_0_FUNC = function(re="[a-z\\.]+=(arrow|rel|paste|paste0)\\([^#]*\\)", t) {
-                # FIXME any function
+            t_0_FUNC = function(re = "[a-z\\.]+=(arrow|rel|paste|paste0|c)\\([^#]*\\)(\\[[0-9a-zA-Z\\._]+\\])?", t) {
                 ggconf_dbgmsg("  t_0_FUNC: ", t$value)
-                t$type <- "0_FUNC"; return(t) 
+                t$type <- "0_FUNC"; 
+                return(t) 
             },
             t_1_NAME      = function(re="(\\\"|')?[\\.a-zA-Z0-9_\\(\\)\\-][a-zA-Z_0-9\\.,=\\(\\)\\-\\+\\/\\*]*(\\\"|')?(\\s*inches|\\s*inch|\\s*in|\\s*cm)?(\\\"|')?", t) {
                 if (grepl("theme\\(", t$value)) {
