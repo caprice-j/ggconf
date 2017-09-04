@@ -166,7 +166,7 @@ Other Works
 Current Implementation Status
 -----------------------------
 
-ggbash is first released on August 24, 2017.
+ggconf is first released on August 24, 2017.
 
 -   DONE:
     -   version 0.1 : lightweight port from ggbash
