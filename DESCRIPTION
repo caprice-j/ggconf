@@ -10,7 +10,6 @@ Imports:
     ggplot2 (>= 2.2.0),
     rly (>= 1.3.0)
 Suggests: 
-    tidyverse,
     knitr,
     testthat, 
     futile.logger (>= 1.4.3),
