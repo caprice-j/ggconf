@@ -1,7 +1,7 @@
 Package: ggconf
 Type: Package
 Title: Simpler Appearance Modification of 'ggplot2'
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(person('Yasutaka', 'Tanaka', , 'tnk.yasutaka@gmail.com', c('aut', 'cre')))
 Description: A flexible interface for ggplot2::theme(), potentially saving 50% of your typing.
 License: GPL-3
