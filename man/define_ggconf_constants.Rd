@@ -20,4 +20,3 @@ with or without a warning message about the ambiguity.
 The preference order is used
          when doing partial match in GgplotParser.
 }
-

@@ -12,4 +12,3 @@ replace_marks(input = "theme2(l.txt(size=12))")
 \description{
 replace some marks for later ggconf parsing
 }
-

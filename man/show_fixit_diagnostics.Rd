@@ -14,4 +14,3 @@ show_fixit_diagnostics(err = list(id = "p_theme_elem:prefix_match", type =
 \description{
 Display useful debugging info for users
 }
-

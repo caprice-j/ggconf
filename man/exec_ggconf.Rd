@@ -25,4 +25,3 @@ Default is TRUE.}
 \description{
 execute raw ggconf commands
 }
-

@@ -14,4 +14,3 @@ compile_ggconf returns a built theme() object as string.}
 \description{
 the core function of ggconf
 }
-

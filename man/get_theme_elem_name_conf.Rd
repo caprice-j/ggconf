@@ -13,4 +13,3 @@ get_theme_elem_name_conf(class = "element_text")
 \description{
 get all theme element configurations
 }
-

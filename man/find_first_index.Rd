@@ -19,4 +19,3 @@ find_first_index(pattern = "sz", table = c("x", "y", "size", "shape",
 \description{
 define constant values used in ggconf
 }
-

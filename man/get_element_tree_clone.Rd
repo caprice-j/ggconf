@@ -14,4 +14,3 @@ get_element_tree_clone()
    I just copied the resulted data frame here.
 }
 }
-

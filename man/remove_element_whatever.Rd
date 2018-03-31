@@ -12,4 +12,3 @@ remove_element_whatever(input = "theme(l=element_text(sz=20))")
 \description{
 remove element_* function calls
 }
-

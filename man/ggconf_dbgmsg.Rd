@@ -12,4 +12,3 @@ ggconf_dbgmsg(...)
 \description{
 display ggconf debug message
 }
-
